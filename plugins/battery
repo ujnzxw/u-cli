@@ -1,0 +1,39 @@
+#!/bin/sh
+
+help()
+{
+    cat<<__EOF__
+    Usage: u battery [ status | help | cmd ]
+
+    Examples:
+      u battery status    # get the battery status
+      u battery cmd       # get the battery command
+__EOF__
+}
+
+_battery_status()
+{
+    upower -i /org/freedesktop/UPower/devices/battery_BAT0
+}
+
+_cmd()
+{
+	echo "upower -i /org/freedesktop/UPower/devices/battery_BAT0"
+}
+
+case $1 in
+    help)
+        help
+        ;;
+    status)
+        _battery_status
+        ;;
+    cmd)
+		_cmd
+		;;
+    *)
+        help
+        ;;
+esac
+
+# vim: set ts=4 sw=4 softtabstop=4 expandtab

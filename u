@@ -1,0 +1,59 @@
+#!/bin/sh
+
+if [ -L $0 ]; then
+    pushd `readlink $0 | xargs dirname` > /dev/null 2>&1
+else
+    pushd `dirname $0` > /dev/null 2>&1
+fi
+export UPATH=`pwd -P`
+popd > /dev/null 2>&1
+. ${UPATH}/lib/colors.sh
+. ${UPATH}/lib/functions.sh
+
+
+usage()
+{
+    cat <<__EOF__
+
+Usage:  u [OPTIONS] COMMAND [help]
+
+    OPTIONS
+        --update        update u-cli to the latest version
+        --uninstall     uninstall u-cli
+
+    COMMANDS:
+        help
+__EOF__
+
+    for i in ${UPATH}/plugins/*; do
+        [ ! -L "$i" -a -f "$i"  ] && echo "        ${i##*/}"
+    done
+    exit 1
+}
+
+case $1 in
+    --update)
+        INSTALL_DIR=${UPATH} ${UPATH}/install.sh
+        exit 0
+        ;;
+    --uninstall)
+        confirm "Do you want to uninstall u-cli? [y/n]: " \
+            && sudo rm -rf ${UPATH} 2>/dev/null \
+            && sudo rm -f "/usr/local/bin/u" 2>/dev/null \
+            && echo "Done !"
+        exit 0
+        ;;
+esac
+
+
+COMMAND=$1; shift;
+
+[ ! -f ${UPATH}/plugins/${COMMAND} ] && usage
+${UPATH}/plugins/${COMMAND} "$@"
+
+
+
+
+# vim: set ts=4 sw=4 softtabstop=4 expandtab
+#
+
