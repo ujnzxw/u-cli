@@ -1,0 +1,45 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+. $UPATH/utils/sys/common.sh
+
+_help(){
+    cat<<__EOF__
+    Usage: u panel [ hide | help ]
+
+    Examples:
+      u panel help         # show this help
+      u panel hide on      # auto hiding the Unity launcher
+      u panel hide off     # unhiding the Unity launcher
+
+__EOF__
+}
+panel_hide()
+{
+    case $1 in
+        on|enable)
+            gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-hide-mode 1
+            ;;
+        off|disable)
+            gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ launcher-hide-mode 0
+            ;;
+        *)
+            _help
+            ;;
+    esac
+
+}
+case $1 in
+    help)
+        _help
+        ;;
+    hide)
+        shift
+        [ -z $1 ] && _help && exit 1
+        panel_hide "$@"
+        ;;
+    *)
+        _help
+        ;;
+esac
+
