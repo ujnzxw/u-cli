@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $UPATH/lib/functions.sh
+. $UPATH/utils/func.sh
 
 help(){
     cat<<__EOF__

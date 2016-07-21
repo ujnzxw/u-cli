@@ -108,3 +108,26 @@ _sys_trash_restore()
     [ -z "$1" ] && echo "No file!"  && exit 1
     trash-restore
 }
+
+# network related
+_sys_show_ip()
+{
+    case $1 in
+
+       a|all)
+           netstat -tn 2>/dev/null
+       ;;
+       *)
+           netstat -tn 2>/dev/null \
+           | grep tcp              \
+           | grep \\.              \
+           | awk '{print $4}'      \
+           | cut -d: -f1           \
+           | sort                  \
+           | uniq -c               \
+           | sort -nr              \
+           | head                  \
+           | awk '{print $2}'
+       ;;
+    esac
+}

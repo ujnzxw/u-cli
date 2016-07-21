@@ -1,12 +1,14 @@
 #!/bin/sh
 
+. $UPATH/utils/sys/common.sh
 
 help(){
     cat<<__EOF__
-    usage: m info [ help ]
+    usage: u info [ help ]
 
     Examples:
-      m info        #  print Mac OS X operating system version information
+      u info                   #  print Ubuntu operating system version information
+      u info hw|hardware       #  print HW DMI information
 __EOF__
 }
 
@@ -14,8 +16,12 @@ case $1 in
     help)
         help
         ;;
+
+    hw|hardware)
+        _sys_system_hw_info
+        ;;
     *)
-        sw_vers
+        _sys_system_sw_info
         ;;
 esac
 

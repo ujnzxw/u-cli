@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $UPATH/lib/functions.sh
+. $UPATH/utils/func.sh
 . $UPATH/utils/sys/common.sh
 
 _help(){
@@ -17,6 +17,7 @@ case $1 in
         _help
         ;;
     *)
+        echo "Put ubuntu to sleep..."
         _sys_force_sleep
         ;;
 esac

@@ -4,25 +4,30 @@
 # * include a function to delete older directories by days or mins
 # * include a function to delete newest directories by days or mins
 
+. $UPATH/utils/func.sh
+
 help(){
     cat<<__EOF__
-    usage: m dir [ tree | delete | help ]
+    usage: u dir [ tree | delete | help ]
 
     Examples:
-      m dir tree        # tree view of folders in the current path
-      m dir tree /path  # tree view of folders in a specific path
+      u dir tree                  # tree view of folders in the current path
+      u dir tree-size             # tree view of folders in the current path with size
+      u dir tree /path            # tree view of folders in a specific path
 
-      m dir delete empty          # delete empty folders recursively in the current path
-      m dir delete empty /path    # delete empty folders recursively in a specific path
+      u dir delete empty          # delete empty folders recursively in the current path
+      u dir delete empty /path    # delete empty folders recursively in a specific path
 __EOF__
 
 }
 
 tree_dirs(){
-    dir=${1:-.}
-    ls -R ${dir}| grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+    tree $@
 }
 
+tree_dirs_with_size(){
+    tree -h $@
+}
 
 delete_empty(){
     DIRS=${@:-.}
@@ -54,6 +59,10 @@ case $1 in
     tree)
         shift
         tree_dirs $@
+        ;;
+    tree-size)
+        shift
+        tree_dirs_with_size $@
         ;;
     delete)
         shift;

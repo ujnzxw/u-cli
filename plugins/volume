@@ -1,63 +1,39 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
 
-help(){
+_help(){
+
     cat<<__EOF__
-    usage:  m volume [ level(0-100) | mute | unmute | ismute ]
+    Usage: u volume [ + | - | mute | unmute ]
 
     Examples:
-      m volume 70     # set the volume to 70 %
-      m volume        # get the volume level
-      m volume mute   # set mute
-      m volume unmute # unset mute
-      m volume ismute # check the volume status
+      u volume +              # increase volume by 5%
+      u volume -              # decrease volume by 5%
+      u volume mute           # volume mute
+      u volume unmute         # volume unmute
 __EOF__
-}
 
-mute(){
-    osascript -e "set volume output muted true"
-    echo "Vol, Mute: true "
-}
-
-unmute(){
-    osascript -e "set volume output muted false"
-    echo "Vol, Mute: false"
-
-}
-
-is_mute(){
-    VALUE=$(osascript -e 'output muted of (get volume settings)')
-    echo "Vol, is mute: ${VALUE}"
-}
-
-set_vol(){
-    osascript -e "set volume output volume $1"
-    echo "Vol: $1"
-}
-
-get_vol(){
-    VALUE=$(osascript -e "output volume of (get volume settings)")
-    echo "Vol: $VALUE"
 }
 
 case $1 in
-    [0-9]*)
-        set_vol $1
+    help)
+        _help
+        ;;
+    +)
+        amixer -D pulse sset Master 5%+
+        ;;
+    -)
+        amixer -D pulse sset Master 5%-
         ;;
     mute)
-        mute
+        amixer set Master mute
         ;;
     unmute)
-        unmute
-        ;;
-    ismute)
-        is_mute
-        ;;
-    help)
-        help
+        amixer set Master unmute
         ;;
     *)
-        get_vol
+        _help
         ;;
 esac
 

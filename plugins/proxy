@@ -1,26 +1,29 @@
 #!/bin/sh
 
-. $UPATH/lib/functions.sh
+. $UPATH/utils/func.sh
 . $UPATH/utils/proxy/set_proxy.sh
 . $UPATH/utils/proxy/chk_proxy.sh
 
 _help(){
     cat<<__EOF__
-    usage:  u network [ ls | list | proxy | help ]
+    usage:  u proxy [ ls | list | none | man | auto | help ]
 
     Examples:
-      u network ls                          # list network proxy
-      u network proxy                       # get current proxy
+      u proxy ls                    # list network proxy
+      u proxy help                  # show this help
 
-      u network proxy none                  # set proxy mode none
-      u network proxy man[ual]              # set proxy mode manual
-      u network proxy auto                  # set proxy mode automatic
-      u network proxy set                   # set a proxy
+      u proxy model none            # set proxy mode none
+      u proxy model man             # set proxy mode manual
+      u proxy model auto            # set proxy mode automatic
+      u proxy set                   # set a proxy
 __EOF__
 
 }
 
-
+_list_netwrk()
+{
+    nmcli d
+}
 # change proxy to none/mamual/auto
 _set_proxy_model()
 {
@@ -85,14 +88,24 @@ case $1 in
         _help
         ;;
     ls|list)
-        list_netservices
+        _list_netwrk
         ;;
-    proxy)
+    mode)
+        [ -z "$2" ] && help && exit 1;
         shift
-        _proxy $@
+        _set_proxy_model $@
         ;;
+
+    set)
+        _proxy_set_proxy
+        ;;
+
+    list|ls)
+        _proxy_chk_proxy
+        ;;
+
     *)
-        _help
+        _help && exit 1;
         ;;
 esac
 

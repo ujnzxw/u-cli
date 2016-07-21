@@ -7,9 +7,6 @@ else
 fi
 export UPATH=`pwd -P`
 popd > /dev/null 2>&1
-. ${UPATH}/lib/colors.sh
-. ${UPATH}/lib/functions.sh
-
 
 usage()
 {

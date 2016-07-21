@@ -1,15 +1,20 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
 
-help(){
+_help(){
+
     cat<<__EOF__
-    usage: m bluetooth [ status | enable | disable | help ]
+    Usage: u bluetooth [ status | enable | disable | help ]
 
     Examples:
-      m bluetooth status    # bluetooth status
-      m bluetooth enable    # turn on bluetooth
-      m bluetooth disable   # turn off bluetooth
+      u bluetooth status         # bluetooth status
+      u bluetooth start          # turn on bluetooth
+      u bluetooth stop           # turn off bluetooth
+      u bluetooth restart        # restart bluetooth
+      u bluetooth force-reload   # force reload bluetooth
 __EOF__
+
 }
 
 has_bluetooth()
@@ -17,32 +22,32 @@ has_bluetooth()
 	dmesg | grep -i blue > /dev/null 2>&1
 }
 
+if [ ! has_bluetooth ]; then
+    echo "No bluetooth device!"
+    exit 1
+fi
+
 case $1 in
     help)
-        help
+        _help
         ;;
     status)
-        defaults read /Library/Preferences/com.apple.Bluetooth ControllerPowerState | \
-            awk '{
-					if($1 != 0)
-					{
-						print "Bluetooth: ON"
-					}
-					else
-					{
-						print "Bluetooth: OFF"
-					}
-				}'
+        _sudo_cmd /etc/init.d/bluetooth status
         ;;
-    enable)
-        sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 1
+    start)
+        _sudo_cmd /etc/init.d/bluetooth start
         ;;
-    disable)
-        sudo defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0 && \
-            sudo killall -HUP blued
+    stop)
+        _sudo_cmd /etc/init.d/bluetooth stop
+        ;;
+    restart)
+        _sudo_cmd /etc/init.d/bluetooth restart
+        ;;
+    force-reload)
+        _sudo_cmd /etc/init.d/bluetooth force-reload
         ;;
     *)
-        help
+        _help
         ;;
 esac
 

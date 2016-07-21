@@ -1,5 +1,7 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
+
 
 help(){
     cat<<__EOF__
@@ -18,14 +20,14 @@ case $1 in
         help
         ;;
     list|ls)
-        sudo systemsetup -listtimezones
+
         ;;
     set)
         [ -z "$2" ] && help && exit 1;
-        sudo systemsetup -settimezone $2
+        _sudo_cmd timedatectl set-timezone $2
         ;;
     *)
-        sudo systemsetup -gettimezone
+        cat /etc/timezone
         ;;
 esac
 

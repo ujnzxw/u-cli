@@ -1,22 +1,16 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
+. $UPATH/utils/sys/common.sh
 
 help(){
     cat<<__EOF__
-    usage:  m  shutdown [-f | --force | help ]
+    usage:  u  shutdown [ -f | --force | help ]
 
     Examples:
-      m shutdown     # shutdown computer (needs confirmation)
-      m shutdown -f  # shutdown computer (without confirmation)
+      u shutdown -f    # shutdown computer (without confirmation)
+      u shutdown       # shutdown computer (needs confirmation)
 __EOF__
-}
-
-shutdown(){
-    osascript -e 'tell app "loginwindow" to «event aevtrsdn»'
-}
-
-force_shutdown(){
-    osascript -e 'tell app "System Events" to shut down'
 }
 
 
@@ -25,11 +19,10 @@ case $1 in
         help
         ;;
     -f|--force)
-        force_shutdown
+        _sys_force_shutdown
         ;;
     *)
-        shutdown
-        ;;
+        _sys_graceful_shutdown
 esac
 
 # vim: set ts=4 sw=4 softtabstop=4 expandtab
