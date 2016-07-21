@@ -1,15 +1,15 @@
 #!/bin/sh
 
+. $UPATH/lib/functions.sh
 
 help(){
     cat<<__EOF__
-    usage: m firewall [ status | enable | disable | add | help ]
+    usage: u firewall [ status | enable | disable | add | help ]
 
     Examples:
-       m firewall status                # Show status
-       m firewall enable                # Enable firewall
-       m firewall disable               # Disable firewall
-       m firewall add /path/to/file     # Add app to firewall
+       u firewall status                # Show status
+       u firewall enable                # Enable firewall
+       u firewall disable               # Disable firewall
 __EOF__
 }
 
@@ -20,17 +20,13 @@ case $1 in
         help
         ;;
     status)
-        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
+        _sudo_cmd ufw status
         ;;
     enable)
-        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+        _sudo_cmd ufw enable
         ;;
     disable)
-        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate off
-        ;;
-    add)
-        [ -z "$2" ] && help && exit 1
-        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add $2
+        _sudo_cmd ufw disable
         ;;
     *)
         help
