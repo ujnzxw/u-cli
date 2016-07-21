@@ -1,0 +1,28 @@
+#!/bin/sh
+
+. $UPATH/lib/functions.sh
+. $UPATH/utils/sys/common.sh
+
+help(){
+    cat<<__EOF__
+    usage:  u  reboot [ -f | --force | help ]
+
+    Examples:
+      u reboot -f    # reboot computer (without confirmation)
+      u reboot       # reboot computer (needs confirmation)
+__EOF__
+}
+
+
+case $1 in
+    help)
+        help
+        ;;
+    -f|--force)
+        _sys_force_reboot
+        ;;
+    *)
+        _sys_graceful_reboot
+esac
+
+# vim: set ts=4 sw=4 softtabstop=4 expandtab
