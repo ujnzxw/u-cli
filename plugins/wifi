@@ -1,58 +1,77 @@
 #!/bin/sh
+# iwconfig
+# sudo ifconfig wlan0 down
+# sudo ifconfig wlan0 up
 
+. $UPATH/lib/functions.sh
 
-_W_DEVICE=${_W_DEVICE:-en0}
+_W_DEVICE=$(nmcli d | grep wireless | awk '{ print $1 }')
 
-help(){
+_help(){
     cat<<__EOF__
-    usage:  m wifi [ scan | off | on | connect | help ]
+    Usage:  u wifi [ status | scan | off | on | connect | disconnect | passwd | help ]
 
     Examples:
-      m wifi status                  # wifi status
-      m wifi scan                    # scan wifi
-      m wifi showpassword ESSID      # show wifi network password
-      m wifi history                 # wifi connection history
-      m wifi off                     # turn off your wifi
-      m wifi on                      # turn on your wifi
-      m wifi connect ESSID PASSWORD  # join a wifi network
+      u wifi status                   # wifi status
+      u wifi scan                     # scan wifi
+      u wifi off                      # turn off your wifi
+      u wifi on                       # turn on your wifi
+      u wifi connect SSID PASSWORD    # connect a wifi network
+      u wifi disconnect [SSID]        # disconnect current wifi network
+      u wifi [show]passw[or]d [SSID]  # show wifi network password
 __EOF__
 }
 
 wifi_status(){
-    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I
+    nmcli nm wifi
 }
 
 wifi_scan(){
-    /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s
-}
-
-wifi_history(){
-    defaults read /Library/Preferences/SystemConfiguration/com.apple.airport.preferences | grep LastConnected -A 7
+    _sudo_cmd "iw dev $_W_DEVICE scan | grep SSID"
 }
 
 wifi_showpassword(){
-    [ -z "$1" ] && help && exit 1
-    security find-generic-password -D "AirPort network password" -a $1 -gw
+    if [ -z "$1" ]; then
+        ssid=`wifi_scan | grep SSID | awk '{print $2}'`
+        passwd=$(_sudo_cmd grep psk= /etc/NetworkManager/system-connections/$ssid | awk -F = '{print $2}')
+    else
+        passwd=`_sudo_cmd grep psk= /etc/NetworkManager/system-connections/$1`
+    fi
+    cat<<__EOF__
+    SSID     : $ssid
+    password : $passwd
+__EOF__
+
+
 }
 
 wifi_off(){
-    networksetup -setairportpower ${_W_DEVICE} off
+    nmcli nm wifi off
 }
 
+
 wifi_on(){
-    networksetup -setairportpower ${_W_DEVICE} on
+    nmcli nm wifi on
 }
 
 connect_network(){
     [ -z "$1" -o -z "$2" ] && help
-    NETWORK="$1"
-    shift
-    networksetup -setairportnetwork "${_W_DEVICE}" "${NETWORK}" "$@"
+    nmcli d wifi connect $1 password $2 iface $_W_DEVICE
+}
+
+disconnect_network(){
+    if [ -z "$1" ]; then
+        ssid=`wifi_scan | grep SSID | awk '{print $2}'`
+    else
+        ssid=$1
+    fi
+
+    nmcli d disconnect iface $ssid
 }
 
 case $1 in
     help)
-        help
+        _help
         ;;
     scan)
         wifi_scan
@@ -70,16 +89,16 @@ case $1 in
         shift
         connect_network "$@"
         ;;
-    history)
+    disconnect)
         shift
-        wifi_history
+        disconnect_network "$@"
         ;;
-    showpassword)
+    showpassword|showpasswd|password|passwd)
         shift
         wifi_showpassword "$@"
         ;;
     *)
-        help
+        _help
         ;;
 esac
 
