@@ -1,21 +1,23 @@
 #!/bin/sh
 
+. $UPATH/lib/functions.sh
+. $UPATH/utils/sys/common.sh
 
-help(){
+_help(){
     cat<<__EOF__
-    usage: m sleep [ help ]
+    Usage: u sleep [ help ]
 
     Examples:
-      m sleep       #  put the mac to sleep
+      u sleep       #  put the ubuntu to sleep/suspend
 __EOF__
 }
 
 case $1 in
     help)
-        help
+        _help
         ;;
     *)
-        pmset sleepnow
+        _sys_force_sleep
         ;;
 esac
 
