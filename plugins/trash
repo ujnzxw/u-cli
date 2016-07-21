@@ -1,36 +1,56 @@
 #!/bin/sh
+#install trash-cli to improve this
 
+. $UPATH/utils/sys/common.sh
 
-help(){
+_help(){
     cat<<__EOF__
-    usage: m trash [ status | clean | help ]
+    usage: u trash [ status | mv | clean | help ]
 
     Examples:
-      m trash status    # get trash info
-      m trash clean     # clean trash
+      u trash status         # get trash info
+      u trash put filename   # move file to trash
+      u trash list           # list file in trash
+      u trash rm  filename   # remove one file in trash
+      u trash restore        # restore file from trash for current path
+      u trash clean[empty]   # clean trash
 __EOF__
 }
 
-clean_trash(){
-    [ ! -e "$HOME/.Trash"  ] && echo "Trash not found" && exit 1
-    sudo chflags -R nouchg $HOME/.Trash/* 2>/dev/null
-    sudo rm -rf $HOME/.Trash/* 2>/dev/null
+# check if trash-cli installed
+# sudo apt-get install -y trash-cli
+# src: https://github.com/andreafrancia/trash-cli
+_sys_trash_cli_chk
 
-}
 
 case $1 in
     help)
-        help
-        ;;
-    clean)
-        clean_trash
+        _help
         ;;
     status)
-        du -ch $HOME/.Trash/* 2>/dev/null | tail -n 1 | awk '{print "Size: ", $1}'
-        find $HOME/.Trash/* 2>/dev/null | wc -l | awk '{print "Number of files:", $1}'
+        _sys_trash_list
+        ;;
+    put)
+       shift
+       [ -z "$1" ] && _help  && exit 1
+        _sys_trash_put $@
+        ;;
+    list)
+        _sys_trash_list
+        ;;
+    rm)
+        shift
+        [ -z "$1" ] && _help  && exit 1
+        _sys_trash_rm $@
+        ;;
+    restore)
+        _sys_trash_restore
+        ;;
+    clean|empty)
+        _sys_trash_clean
         ;;
     *)
-        help
+        _help
         ;;
 esac
 
