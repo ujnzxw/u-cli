@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. $UPATH/lib/functions.sh
+. $UPATH/utils/func.sh
 
 #--------GLOBAL VARIABLES----------------
 APT_CFG_FILE=$UPATH/utils/proxy/apt_config.conf
