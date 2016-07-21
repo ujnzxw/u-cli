@@ -1,44 +1,55 @@
 #!/bin/sh
 
+. $UPATH/lib/functions.sh
 
 help(){
     cat<<__EOF__
-    Usage: m group [ list | ls | info | adduser | removeuser | ismember | help ]
+    Usage: u group [ list | ls | info | adduser | removeuser | ismember | help ]
 
     Examples:
-      m group list                          # get list of groups
-      m group info mygroup                  # display group information
+      u group list                          # get list of groups
+      u group info mygroup                  # display group information
 
-      m group adduser myuser mygroup        # add an user to a specific group
-      m group removeuser myuser mygroup     # remove an user from a specific group
+      u group adduser myuser mygroup        # add an user to a specific group
+      u group removeuser myuser mygroup     # remove an user from a specific group
 
-      m group ismember myuser mygroup       # show if the user is a member of a specific group
+      u group ismember myuser mygroup       # show if the user is a member of a specific group
 
 __EOF__
 }
 
 group_ls(){
-    dscl . -list /Groups gid
+    #getent passwd | awk -F: '{print $1}' | while read name; do groups $name; done
+    groups
 }
 
 group_info(){
     [ -z "$1" ] && help && exit 1
-    dscl . -read "/Groups/$1"
+    getent group
+
 }
 
 group_add_user(){
     [ -z "$1" -o -z "$2" ] && help && exit 1
-    sudo dseditgroup -o edit -a ${1} -t user ${2}
+    _sudo_cmd usermod -a -G $2 $1
 }
 
 group_remove_user(){
     [ -z "$1" -o -z "$2" ] && help && exit 1
-    sudo dseditgroup -o edit -d ${1} -t user ${2}
+    gpasswd -d $1 $2
 }
+
 
 group_is_a_member(){
     [ -z "$1" -o -z "$2" ] && help && exit 1
-    dseditgroup -o checkmember -m ${1} ${2}
+    USER=$1
+    GROUP=$2
+
+    if id -nG "$USER" | grep -qw "$GROUP"; then
+        echo $USER belongs to $GROUP
+    else
+        echo $USER does not belong to $GROUP
+    fi
 }
 
 case $1 in
