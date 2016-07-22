@@ -1,0 +1,45 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+. $UPATH/utils/sys/common.sh
+
+_help(){
+    cat<<__EOF__
+    Usage: u app [ hide | help ]
+
+    Examples:
+      u app help         # show this help
+      u app chrome       # setup chrome
+
+__EOF__
+}
+_chrome()
+{
+    if _has "google-chrome"; then
+        google-chrome > /dev/null 2>&1 &
+    else
+        echo "No chrome application found!"
+    fi
+}
+_win7()
+{
+    vbox_name="win7-steven-dev-base_default_1466847584895_25777"
+    VBoxManage startvm ${vbox_name} --type headless > /dev/null 2>&1 &
+}
+case $1 in
+    help)
+        _help
+        ;;
+    chrome)
+        #shift
+        #[ -z $1 ] && _help && exit 1
+        _chrome
+        ;;
+    win7)
+        _win7
+        ;;
+    *)
+        _help
+        ;;
+esac
+
