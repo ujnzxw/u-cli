@@ -1,9 +1,9 @@
 #!/bin/sh
 
 . $UPATH/utils/func.sh
-. $UPATH/utils/sys/common.sh
 
-_help(){
+_help()
+{
     cat<<__EOF__
     Usage: u panel [ hide | help ]
 

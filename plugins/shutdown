@@ -1,16 +1,25 @@
 #!/bin/sh
 
 . $UPATH/utils/func.sh
-. $UPATH/utils/sys/common.sh
 
 help(){
     cat<<__EOF__
     usage:  u  shutdown [ -f | --force | help ]
 
     Examples:
-      u shutdown -f    # shutdown computer (without confirmation)
-      u shutdown       # shutdown computer (needs confirmation)
+      u shutdown f[orce]    # shutdown computer (without confirmation)
+      u shutdown            # shutdown computer (needs confirmation)
 __EOF__
+}
+
+_force_shutdown()
+{
+    _sudo_cmd poweroff
+}
+
+_graceful_shutdown()
+{
+    gnome-session-quit --reboot
 }
 
 
@@ -18,11 +27,10 @@ case $1 in
     help)
         help
         ;;
-    -f|--force)
-        _sys_force_shutdown
+    f|force)
+        _force_shutdown
         ;;
     *)
-        _sys_graceful_shutdown
+        _graceful_shutdown
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

@@ -22,15 +22,18 @@ _help(){
 __EOF__
 }
 
-wifi_status(){
+wifi_status()
+{
     nmcli nm wifi
 }
 
-wifi_scan(){
+wifi_scan()
+{
     _sudo_cmd "iw dev $_W_DEVICE scan | grep SSID"
 }
 
-wifi_showpassword(){
+wifi_showpassword()
+{
     if [ -z "$1" ]; then
         ssid=`wifi_scan | grep SSID | awk '{print $2}'`
         passwd=$(_sudo_cmd grep psk= /etc/NetworkManager/system-connections/$ssid | awk -F = '{print $2}')
@@ -41,8 +44,6 @@ wifi_showpassword(){
     SSID     : $ssid
     password : $passwd
 __EOF__
-
-
 }
 
 wifi_off(){

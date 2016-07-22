@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $UPATH/utils/sys/common.sh
+. $UPATH/utils/func.sh
 
 _help(){
     cat<<__EOF__
@@ -16,41 +16,105 @@ _help(){
 __EOF__
 }
 
+_trash_cli_chk()
+{
+    if _has trash-list; then
+        continue
+    else
+        echo "trash-cli is not installed, install it now?"
+        if confirm; then
+            clear
+            echo "start to install trash-cli..."
+            _sudo_cmd apt-get install trash-cli
+            if _has trash-list; then
+
+                echo "Done. Please re-run your command :)"
+                exit 0
+            else
+                echo "ERROR encountered! Please have a check!"
+                exit 1
+            fi
+        else
+            echo "CMD \"u trash\" cannot be used without trash-cli :("
+            exit 1
+        fi
+    fi
+}
+
+_trash_clean()
+{
+    trash-empty
+}
+
+_trash_clean()
+{
+    trash-empty
+}
+
+_trash_status()
+{
+    #[ -z "$1" ] && echo "No file!"  && exit 1
+    trash-list
+
+}
+_trash_put()
+{
+    [ -z "$1" ] && echo "No file!"  && exit 1
+    trash-put $@
+
+}
+_trash_list()
+{
+    #[ -z "$1" ] && echo "No file!"  && exit 1
+    trash-list
+
+}
+_trash_clean()
+{
+#    [ ! -e "$HOME/.Trash"  ] && echo "Trash not found" && exit 1
+    [ -z "$1" ] && echo "No file!"  && exit 1
+    trash-empty
+}
+_trash_restore()
+{
+    [ -z "$1" ] && echo "No file!"  && exit 1
+    trash-restore
+}
+
 # check if trash-cli installed
 # sudo apt-get install -y trash-cli
-# src: https://github.com/andreafrancia/trash-cli
-_sys_trash_cli_chk
-
+_trash_cli_chk
 
 case $1 in
     help)
         _help
         ;;
     status)
-        _sys_trash_list
+        _trash_list
         ;;
     put)
        shift
        [ -z "$1" ] && _help  && exit 1
-        _sys_trash_put $@
+        _trash_put $@
         ;;
     list)
-        _sys_trash_list
+        _trash_list
         ;;
     rm)
         shift
         [ -z "$1" ] && _help  && exit 1
-        _sys_trash_rm $@
+        _trash_rm $@
         ;;
     restore)
-        _sys_trash_restore
+        _trash_restore
         ;;
     clean|empty)
-        _sys_trash_clean
+        _trash_clean
         ;;
     *)
         _help
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
+# Reference
+# https://github.com/andreafrancia/trash-cli

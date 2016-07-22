@@ -1,8 +1,6 @@
 #!/bin/sh
 
-
 . $UPATH/utils/func.sh
-. $UPATH/utils/sys/common.sh
 
 _help(){
     cat<<__EOF__
@@ -14,15 +12,36 @@ _help(){
       u ip a[all]                # list all your ip addr connected to remote server
 __EOF__
 }
+_show_ip()
+{
+    case $1 in
+
+       a|all)
+           netstat -tn 2>/dev/null
+       ;;
+       *)
+           netstat -tn 2>/dev/null \
+           | grep tcp              \
+           | grep \\.              \
+           | awk '{print $4}'      \
+           | cut -d: -f1           \
+           | sort                  \
+           | uniq -c               \
+           | sort -nr              \
+           | head                  \
+           | awk '{print $2}'
+       ;;
+    esac
+}
 
 case $1 in
     help)
         _help
         ;;
     *)
-        _sys_show_ip $@
+        _show_ip $@
         ;;
 esac
 
-#https://www.mkyong.com/linux/list-all-ip-addresses-connected-to-your-server/
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
+# Rfeference
+# https://www.mkyong.com/linux/list-all-ip-addresses-connected-to-your-server/

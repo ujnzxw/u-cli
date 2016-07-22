@@ -1,7 +1,6 @@
 #!/bin/sh
 
 . $UPATH/utils/func.sh
-. $UPATH/utils/sys/common.sh
 
 _help(){
     cat<<__EOF__
@@ -12,14 +11,17 @@ _help(){
 __EOF__
 }
 
+_force_sleep()
+{
+    _sudo_cmd pm-suspend
+}
+
 case $1 in
     help)
         _help
         ;;
     *)
         echo "Put ubuntu to sleep..."
-        _sys_force_sleep
+        _force_sleep
         ;;
 esac
-
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

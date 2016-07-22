@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $UPATH/utils/sys/common.sh
+. $UPATH/utils/func.sh
 
 _help(){
     cat<<__EOF__
@@ -11,6 +11,13 @@ _help(){
 __EOF__
 }
 
+_set_wallpaper()
+{
+    [ -z "$1" ] && echo "No file!"  && exit 1
+    uri="file://$1"
+    gsettings set org.gnome.desktop.background picture-uri $uri
+}
+
 case $1 in
     help)
         _help
@@ -18,7 +25,7 @@ case $1 in
     *)
         [ -z "$1" ] && help && exit 1
         shift
-        _sys_set_wallpaper $1
+        _set_wallpaper $1
         ;;
 esac
 
