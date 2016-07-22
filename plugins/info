@@ -1,36 +1,57 @@
 #!/bin/sh
 
-help()
+. $UPATH/utils/func.sh
+
+_help()
 {
     cat<<__EOF__
     usage: u info [ help ]
 
     Examples:
-      u info                   #  print Ubuntu operating system version information
-      u info hw|hardware       #  print HW DMI information
+      u info                     # print Ubuntu operating system info
+      u info cpu                 # print CPU info
+      u info pci                 # print PCI info
+      u info usb                 # print USB info
+      u info disk                # print disk all the disk info
+      u info diskinfo /my/disk   # print more about specific disk
+      u info dmi                 # print DMI info
+      u info hw|hardware         # Extract detailed information on the hardware configuration of the machine
+      u info sw|os               # print Ubuntu operating system info
 __EOF__
 }
 
-_system_hw_info()
-{
-    _sudo_cmd dmidecode -q | more
-}
-
-_system_sw_info()
-{
-    lsb_release -a
-}
-
 case $1 in
-    help)
-        help
+    h|help)
+        _help
         ;;
-
+    [Cc][Pp][Uu])
+        lscpu | more
+        ;;
+    [Pp][Cc][Ii])
+        lspci | more
+        ;;
+    [Uu][Ss][Bb])
+        lsusb | more
+        ;;
+    [Dd][Ii][Ss][Kk])
+        df -H
+        ;;
+    diskinfo)
+        shift
+        [ -z $1 ] && _help && exit 1
+        _sudo_cmd hdparm $1
+        ;;
+    [Dd][Mm][Ii])
+        _sudo_cmd dmidecode | more
+        ;;
     hw|hardware)
-        _system_hw_info
+        _sudo_cmd lshw | more
+        ;;
+    [Oo][Ss][Ss][Ww])
+        lsb_release -a
         ;;
     *)
-        _system_sw_info
+        lsb_release -a
         ;;
 esac
 
