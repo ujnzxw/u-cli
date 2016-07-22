@@ -31,5 +31,5 @@ confirm()
 
 _sudo_cmd()
 {
-    sudo sh -c "\"$*\""
+    sudo sh -c "$*"
 }
