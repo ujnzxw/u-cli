@@ -7,7 +7,7 @@ _help(){
     Usage:  u ip [ all | help ]
 
     Examples:
-      u ip help                  # show this help
+      u ip h[elp]                  # show this help
       u ip                       # show your ip
       u ip a[all]                # list all your ip addr connected to remote server
 __EOF__
@@ -17,7 +17,7 @@ _show_ip()
     case $1 in
 
        a|all)
-           netstat -tn 2>/dev/null
+           netstat -tn 2>/dev/null | more
        ;;
        *)
            netstat -tn 2>/dev/null \
@@ -35,7 +35,7 @@ _show_ip()
 }
 
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     *)
