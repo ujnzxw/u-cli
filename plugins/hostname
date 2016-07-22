@@ -1,41 +1,36 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
 
 _help(){
     cat<<__EOF__
     usage: u hostname [ help ]
 
     Examples:
-      u hostname                # get the current hostname information
-      u hostname newhostname    # set a new hostname
-
-      u hostname help           # only shows this help
+      u hostname ls|list                 # get the current hostname information
+      u hostname changeto                # set a new hostname
+      u hostname help                    # only shows this help
 __EOF__
 }
 
-
-show_hostname(){
-    hostnamectl
-}
-
-
-set_hostname(){
-    echo "Changing hostname to: $1"
-    hostnamectl $1
-}
-
-
 case $1 in
-    help)
+    h|help)
         _help
         ;;
-    *)
-        if [ -z "$1" ]; then
-            show_hostname
+    ls|list)
+        hostnamectl
+        ;;
+    changeto)
+        if confirm "Want to change hostname[y/N](default NO)?";then
+            read -r -p "New hostname: " _HOSTNAME
+            [ -z ${_HOSTNAME} ] && echo "New hostname should not be none!" && exit 1
+            hostnamectl ${_HOSTNAME}
+            echo "Changing hostname to: ${_HOSTNAME}"
         else
-            set_hostname $1
+            exit 1
         fi
         ;;
+    *)
+        _help
+        ;;
 esac
-
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
