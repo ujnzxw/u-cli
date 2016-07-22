@@ -1,12 +1,8 @@
 #!/bin/sh
 
-# TODO:
-# * include a function to delete older directories by days or mins
-# * include a function to delete newest directories by days or mins
-
 . $UPATH/utils/func.sh
 
-help(){
+_help(){
     cat<<__EOF__
     usage: u dir [ tree | delete | help ]
 
@@ -21,15 +17,15 @@ __EOF__
 
 }
 
-tree_dirs(){
+_tree_dirs(){
     tree $@
 }
 
-tree_dirs_with_size(){
+_tree_dirs_with_size(){
     tree -h $@
 }
 
-delete_empty(){
+_delete_empty(){
     DIRS=${@:-.}
     echo "Folders to be deleted: "
     find $DIRS -type d -empty -print
@@ -38,14 +34,14 @@ delete_empty(){
 
 
 
-delete(){
+_delete(){
     case $1 in
         empty)
             shift;
-            delete_empty $@
+            _delete_empty $@
             ;;
         *)
-            help && exit 1
+            _help && exit 1
             ;;
     esac
 }
@@ -54,23 +50,22 @@ delete(){
 
 case $1 in
     help)
-        help
+        _help
         ;;
     tree)
         shift
-        tree_dirs $@
+        _tree_dirs $@
         ;;
     tree-size)
         shift
-        tree_dirs_with_size $@
+        _tree_dirs_with_size $@
         ;;
     delete)
         shift;
-        delete $@
+        _delete $@
         ;;
     *)
-        help
+        _help
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

@@ -48,9 +48,3 @@ COMMAND=$1; shift;
 [ ! -f ${UPATH}/plugins/${COMMAND} ] && usage
 ${UPATH}/plugins/${COMMAND} "$@"
 
-
-
-
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
-#
-

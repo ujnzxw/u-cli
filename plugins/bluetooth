@@ -23,8 +23,7 @@ has_bluetooth()
 }
 
 if [ ! has_bluetooth ]; then
-    echo "No bluetooth device!"
-    exit 1
+    echo "No bluetooth device!" && exit 1
 fi
 
 case $1 in
