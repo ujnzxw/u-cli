@@ -1,5 +1,4 @@
 #!/bin/sh
-#install trash-cli to improve this
 
 . $UPATH/utils/sys/common.sh
 
