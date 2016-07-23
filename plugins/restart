@@ -1,35 +1,41 @@
 #!/bin/sh
 
+. $UPATH/utils/func.sh
 
-help(){
+_help(){
     cat<<__EOF__
-    usage:  m restart [ -f | --force | help ]
+    Usage:  u restart [ -f | --force | help ]
 
     Examples:
-      m restart     # restart computer (needs confirmation)
-      m restart -f  # restart computer (without confirmation)
+      u restart           # restart computer (needs confirmation)
+      u restart -f[orce]  # restart computer (without confirmation)
 __EOF__
 }
 
-restart(){
-    osascript -e 'tell app "loginwindow" to «event aevtrrst»'
+_restart(){
+    if confirm "Double confirm for restart, are you sure(Y/n)?"; then
+        _sudo_cmd reboot
+    else
+        echo "Do nothing and safe EXIT" && exit 0
+    fi
 }
 
-force_restart(){
-   osascript -e 'tell app "System Events" to restart'
+_force_restart(){
+    _sudo_cmd reboot
 }
 
 
 case $1 in
     help)
-        help
+        _help
         ;;
-    -f|--force)
-        force_restart
+    -f|--force|force)
+        _force_restart
         ;;
     *)
-        restart
+        _restart
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
+# Reference
+# [Restart in CLI](http://askubuntu.com/questions/187071/how-do-i-shut-down-or-reboot-from-a-terminal)
