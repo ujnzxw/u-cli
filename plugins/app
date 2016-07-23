@@ -4,14 +4,20 @@
 
 _help()
 {
-    cat<<__EOF__
+    cat 1>&2 <<__EOF__
     Usage: u app [ hide | help ]
 
     Examples:
       u app help         # show this help
       u app chrome       # setup chrome
+      u app win7         # setup win7 in Virtual Box
 
 __EOF__
+#    $cmd=${!!}
+#    sum_cmd=''
+#    read -p ${cmd} $sub_cmd
+#    ${cmd} $sub_cmd
+#
 }
 _chrome()
 {
@@ -31,8 +37,6 @@ case $1 in
         _help
         ;;
     chrome)
-        #shift
-        #[ -z $1 ] && _help && exit 1
         _chrome
         ;;
     win7)
