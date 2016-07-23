@@ -99,7 +99,7 @@ fi
 
 [ -z "${INSTALL_DIR}" ] && INSTALL_DIR="/usr/local/${PKG}"
 
-if [ -f "${INSTALL_DIR}/m" ]; then
+if [ -f "${INSTALL_DIR}/u" ]; then
     install_echo ""
     install_echo "Done!"
 else
@@ -109,4 +109,3 @@ else
     exit 1
 fi
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
