@@ -20,21 +20,23 @@ case $1 in
     help)
         _help
         ;;
-    +)
+    \+)
         amixer -D pulse sset Master 5%+
         ;;
-    -)
+    \-)
         amixer -D pulse sset Master 5%-
         ;;
     mute)
         amixer set Master mute
         ;;
-    unmute)
-        amixer set Master unmute
+    unmute|umute)
+        #amixer set Master unmute
+        for x in `amixer controls  | grep layback > /dev/null 2>&1` ; do amixer cset "${x}" 70% > /dev/null 2>&1; done
         ;;
     *)
         _help
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
+# Reference
+# [unmute no work](http://askubuntu.com/questions/77522/command-to-unmute-and-maximize-volume)
