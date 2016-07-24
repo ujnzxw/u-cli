@@ -10,9 +10,9 @@ _help(){
     Usage:  u proxy [ ls | list | none | man | auto | help ]
 
     Examples:
-      u proxy ls                    # list network proxy
       u proxy help                  # show this help
 
+      u proxy ls                    # list network proxy
       u proxy model none            # set proxy mode none
       u proxy model man             # set proxy mode manual
       u proxy model auto            # set proxy mode automatic
