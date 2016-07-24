@@ -25,7 +25,6 @@ socks_port=''      # 12
 # function to configure environment variables
 _proxy_config_env()
 {
-    # _proxy_config_env $http_host $http_port $use_auth $use_same $username $password $https_host $https_port $ftp_host $ftp_port $socks_host $socks_port
     if [[ $use_same == 'y' ]]; then
         if [[ $use_auth == 'y' ]]; then
             sed -i "s/<PROXY>/$username\:$password@$http_host\:$http_port/g" $BASH_SET_CFG_FILE
