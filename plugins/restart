@@ -7,6 +7,7 @@ _help(){
     Usage:  u restart [ -f | --force | help ]
 
     Examples:
+      u restart h[elp]    # show this help
       u restart           # restart computer (needs confirmation)
       u restart -f[orce]  # restart computer (without confirmation)
 __EOF__
@@ -26,7 +27,7 @@ _force_restart(){
 
 
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     -f|--force|force)

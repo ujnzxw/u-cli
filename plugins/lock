@@ -7,7 +7,9 @@ _help(){
     Usage: u lock [ help ]
 
     Examples:
-      u lock       # lock the ubuntu
+      u lock h[elp]       # show this help
+      u lock              # lock the ubuntu
+
 __EOF__
 }
 

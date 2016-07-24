@@ -7,26 +7,27 @@ _help(){
     Usage: u wallpaper [ /path/to/file.jpg | help ]
 
     Examples:
+      u wallpaper h[elp]                   # show this help
       u wallpaper ./wallpapers/tree.jpg    # set wallpaper
+
 __EOF__
 }
 
 _set_wallpaper()
 {
-    [ -z "$1" ] && echo "No file!"  && exit 1
+    [ -z "$1" ] && echo "please input a picture's full path"  && exit 1
     uri="file://$1"
     gsettings set org.gnome.desktop.background picture-uri $uri
 }
 
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     *)
-        [ -z "$1" ] && help && exit 1
+        [ -z "$1" ] && _help && exit 1
         shift
         _set_wallpaper $1
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

@@ -12,6 +12,7 @@ _help(){
       u volume -              # decrease volume by 5%
       u volume mute           # volume mute
       u volume unmute         # volume unmute
+
 __EOF__
 
 }

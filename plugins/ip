@@ -7,9 +7,10 @@ _help(){
     Usage:  u ip [ all | help ]
 
     Examples:
-      u ip h[elp]                  # show this help
+      u ip h[elp]                # show this help
       u ip                       # show your ip
       u ip a[all]                # list all your ip addr connected to remote server
+
 __EOF__
 }
 _show_ip()

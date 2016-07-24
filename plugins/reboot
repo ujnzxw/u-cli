@@ -2,14 +2,16 @@
 
 . $UPATH/utils/func.sh
 
-help()
+_help()
 {
     cat<<__EOF__
-    usage:  u  reboot [ -f | --force | help ]
+    Usage:  u  reboot [ f | force | help ]
 
     Examples:
-      u reboot -f    # reboot computer (without confirmation)
-      u reboot       # reboot computer (needs confirmation)
+      u reboot h[elp]    # show this help
+      u reboot f[orce]   # reboot computer (without confirmation)
+      u reboot           # reboot computer (needs confirmation)
+
 __EOF__
 }
 _force_reboot()
@@ -23,10 +25,10 @@ _graceful_reboot()
 
 
 case $1 in
-    help)
-        help
+    h|help)
+        _help
         ;;
-    -f|--force)
+    f|force|-f|--force)
         _force_reboot
         ;;
     *)

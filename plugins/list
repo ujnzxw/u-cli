@@ -1,0 +1,38 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+_help()
+{
+    cat <<__EOF__
+    Usage: u list
+
+    Examples:
+        u list h[elp]    # show this help
+        u list           # list all the availible commands
+
+__EOF__
+}
+_list_all_cmd()
+{
+    for i in ${UPATH}/plugins/*; do
+        PLUGIN=${i##*/}
+        if [ "$1" != "$PLUGIN" ]; then
+           echo "==========="
+           echo "u $PLUGIN"
+           echo "==========="
+           echo
+           (${UPATH}/plugins/${PLUGIN} help)
+       fi
+    done
+    exit 0
+}
+case $1 in
+   h|help)
+        _help
+        ;;
+    *)
+        ( _list_all_cmd ) | more
+        ;;
+esac
+

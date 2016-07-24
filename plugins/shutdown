@@ -2,13 +2,15 @@
 
 . $UPATH/utils/func.sh
 
-help(){
+_help(){
     cat<<__EOF__
-    usage:  u  shutdown [ -f | --force | help ]
+    Usage:  u  shutdown [ f | force | help ]
 
     Examples:
-      u shutdown f[orce]    # shutdown computer (without confirmation)
-      u shutdown            # shutdown computer (needs confirmation)
+      u shutdown h[elp]         # show this help
+      u shutdown [--]f[orce]    # shutdown computer (without confirmation)
+      u shutdown                # shutdown computer (needs confirmation)
+
 __EOF__
 }
 
@@ -24,10 +26,10 @@ _graceful_shutdown()
 
 
 case $1 in
-    help)
-        help
+    h|help)
+        _help
         ;;
-    f|force)
+    f|force|-f|--force)
         _force_shutdown
         ;;
     *)

@@ -4,12 +4,13 @@
 
 help(){
     cat<<__EOF__
-    usage: u firewall [ status | enable | disable | add | help ]
+    Usage: u firewall [ status | enable | disable | help ]
 
     Examples:
        u firewall status                # Show status
        u firewall enable                # Enable firewall
        u firewall disable               # Disable firewall
+
 __EOF__
 }
 
@@ -33,4 +34,3 @@ case $1 in
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

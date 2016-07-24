@@ -5,14 +5,15 @@
 _help(){
 
     cat<<__EOF__
-    Usage: u bluetooth [ status | enable | disable | help ]
+    Usage: u bluetooth [ status | enable | disable | restart | force-reload | help ]
 
     Examples:
       u bluetooth status         # bluetooth status
-      u bluetooth start          # turn on bluetooth
-      u bluetooth stop           # turn off bluetooth
+      u bluetooth enable         # turn on bluetooth
+      u bluetooth disable        # turn off bluetooth
       u bluetooth restart        # restart bluetooth
       u bluetooth force-reload   # force reload bluetooth
+
 __EOF__
 
 }

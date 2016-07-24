@@ -1,12 +1,14 @@
 #!/bin/sh
 
 . $UPATH/utils/func.sh
+
+# TODO - remove below 2 files
 . $UPATH/utils/proxy/set_proxy.sh
 . $UPATH/utils/proxy/chk_proxy.sh
 
 _help(){
     cat<<__EOF__
-    usage:  u proxy [ ls | list | none | man | auto | help ]
+    Usage:  u proxy [ ls | list | none | man | auto | help ]
 
     Examples:
       u proxy ls                    # list network proxy
@@ -16,14 +18,16 @@ _help(){
       u proxy model man             # set proxy mode manual
       u proxy model auto            # set proxy mode automatic
       u proxy set                   # set a proxy
+
 __EOF__
 
 }
 
-_list_netwrk()
-{
-    nmcli d
-}
+#_list_netwrk()
+#{
+#    nmcli d
+#}
+
 # change proxy to none/mamual/auto
 _set_proxy_model()
 {
@@ -31,17 +35,6 @@ _set_proxy_model()
 		none)
 			echo " Set proxy mode - none"
 			gsettings set org.gnome.system.proxy mode none
-			auth=$(gsettings get org.gnome.system.proxy.http use-authentication)
-			echo "Remove authentication credentials (id/password) saved on this system."
-			if comfirm; then
-                gsettings set org.gnome.system.proxy.http use-authentication false
-                gsettings set org.gnome.system.proxy.http authentication-user "''"
-                gsettings set org.gnome.system.proxy.http authentication-password "''"
-            else
-                _red_msg "Your login credentials still exist on this system"
-
-                _red_msg "Take care! :)"
-			fi
 			echo "Operation completed successfully."
 			;;
 
@@ -60,39 +53,16 @@ _set_proxy_model()
 	esac
 }
 
-_proxy(){
-    case $1 in
-        mode)
-            [ -z "$2" ] && help && exit 1;
-            shift
-            _set_proxy_model $@
-            ;;
-
-        set)
-            _proxy_set_proxy
-            ;;
-
-        list|ls)
-            _proxy_chk_proxy
-            ;;
-
-        *)
-            _help && exit 1;
-            ;;
-    esac
-}
-
-
 case $1 in
     help)
         _help
         ;;
     ls|list)
-        _list_netwrk
+        _proxy_chk_proxy
         ;;
     mode)
-        [ -z "$2" ] && help && exit 1;
         shift
+        [ -z "$1" ] && help && exit 1;
         _set_proxy_model $@
         ;;
 
@@ -100,13 +70,8 @@ case $1 in
         _proxy_set_proxy
         ;;
 
-    list|ls)
-        _proxy_chk_proxy
-        ;;
-
     *)
         _help && exit 1;
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab

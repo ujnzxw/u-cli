@@ -3,12 +3,13 @@
 
 _help(){
     cat<<__EOF__
-    Usage: u disk [ ls | list | help ]
+    Usage: u disk [ ls | list | info | help ]
 
     Examples:
       u disk ls                                 # list disks
       u disk list                               # list disks
       u disk list /dev/disk0                    # list a specific disk
+      u disk info /dev/disk0                    # print info for a specific disk
 
 __EOF__
 }
@@ -23,7 +24,8 @@ disk_ls(){
 
 disk_info(){
     [ -z "$1" ] && help && exit 1
-     $1
+    # enhace here
+    df $1
 }
 
 case $1 in
@@ -32,7 +34,11 @@ case $1 in
         ;;
     list|ls)
         shift
-        disk_ls $@
+        disk_ls "$@"
+        ;;
+    info)
+        shift
+        disk_info "$@"
         ;;
     *)
         _help

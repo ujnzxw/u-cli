@@ -19,6 +19,7 @@ _help(){
       u wifi connect SSID PASSWORD    # connect a wifi network
       u wifi disconnect [SSID]        # disconnect current wifi network
       u wifi [show]passw[or]d [SSID]  # show wifi network password
+
 __EOF__
 }
 

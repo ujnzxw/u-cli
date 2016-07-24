@@ -7,7 +7,9 @@ _help(){
     Usage: u sleep [ help ]
 
     Examples:
-      u sleep       #  put the ubuntu to sleep/suspend
+      u sleep h[elp]      #  show this help
+      u sleep             #  put the ubuntu to sleep/suspend
+
 __EOF__
 }
 
@@ -17,7 +19,7 @@ _force_sleep()
 }
 
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     *)

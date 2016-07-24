@@ -25,7 +25,7 @@ __EOF__
 
 service_list(){
     if [ -z "${1}" ]; then
-        service --status-all
+        service --status-all | more
     else
          /etc/init.d/${1} status
     fi
@@ -73,7 +73,7 @@ case $1 in
         service_restart $@
         ;;
     *)
-        help
+        _help
         ;;
 esac
 

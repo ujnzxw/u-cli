@@ -5,10 +5,10 @@
 _help()
 {
     cat<<__EOF__
-    usage: u info [ help ]
+    Usage: u info [ help ]
 
     Examples:
-      u info                     # print Ubuntu operating system infomation
+      u info                     # print Operating System infomation
       u info cpu                 # print CPU infomation
       u info pci                 # print PCI infomation
       u info usb                 # print USB infomation
@@ -19,6 +19,7 @@ _help()
       u info hw|hardware         # Extract detailed information on the hardware configuration of the machine
       u info sw|os               # print Operating System infomation
       u info mem[ory]            # print memory infomation
+
 __EOF__
 }
 

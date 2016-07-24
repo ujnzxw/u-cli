@@ -4,15 +4,17 @@
 
 _help(){
     cat<<__EOF__
-    usage: u trash [ status | mv | clean | help ]
+    Usage: u trash [ status | mv | clean | help ]
 
     Examples:
+      u trash h[elp]         # show this help
       u trash status         # get trash info
       u trash put filename   # move file to trash
       u trash list           # list file in trash
       u trash rm  filename   # remove one file in trash
       u trash restore        # restore file from trash for current path
       u trash clean[empty]   # clean trash
+
 __EOF__
 }
 
@@ -86,7 +88,7 @@ _trash_restore()
 _trash_cli_chk
 
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     status)

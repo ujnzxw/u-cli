@@ -4,12 +4,13 @@
 
 _help(){
     cat<<__EOF__
-    usage: u hostname [ help ]
+    Usage: u hostname [ help ]
 
     Examples:
       u hostname ls|list                 # get the current hostname information
       u hostname changeto                # set a new hostname
-      u hostname help                    # only shows this help
+      u hostname help                    # Show this help
+
 __EOF__
 }
 

@@ -5,10 +5,10 @@
 _help()
 {
     cat 1>&2 <<__EOF__
-    Usage: u app [ hide | help ]
+    Usage: u app [ chrome | win7 | help ]
 
     Examples:
-      u app help         # show this help
+      u app h[elp]       # show this help
       u app chrome       # setup chrome
       u app win7         # setup win7 in Virtual Box
 
@@ -33,7 +33,7 @@ _win7()
     VBoxManage startvm ${vbox_name} --type headless > /dev/null 2>&1 &
 }
 case $1 in
-    help)
+    h|help)
         _help
         ;;
     chrome)

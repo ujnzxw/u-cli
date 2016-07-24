@@ -46,9 +46,9 @@ group_is_a_member(){
     GROUP=$2
 
     if id -nG "$USER" | grep -qw "$GROUP"; then
-        echo $USER belongs to $GROUP
+        echo "$USER belongs to $GROUP"
     else
-        echo $USER does not belong to $GROUP
+        echo "$USER does not belong to $GROUP"
     fi
 }
 
@@ -80,4 +80,3 @@ case $1 in
         ;;
 esac
 
-# vim: set ts=4 sw=4 softtabstop=4 expandtab
