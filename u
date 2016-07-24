@@ -25,7 +25,6 @@ __EOF__
     for i in ${UPATH}/plugins/*; do
         [ ! -L "$i" -a -f "$i"  ] && echo "        ${i##*/}"
     done
-    exit 1
 }
 
 case $1 in
@@ -45,6 +44,6 @@ esac
 
 COMMAND=$1; shift;
 
-[ ! -f ${UPATH}/plugins/${COMMAND} ] && usage
+[ ! -f ${UPATH}/plugins/${COMMAND} ] && ( ( usage ) | more ) && exit 1
 ${UPATH}/plugins/${COMMAND} "$@"
 
