@@ -18,11 +18,12 @@ _list_all_cmd()
     for i in ${UPATH}/plugins/*; do
         PLUGIN=${i##*/}
         if [ "$1" != "$PLUGIN" ]; then
-           echo "==========="
            echo "u $PLUGIN"
            echo "==========="
            echo
+           echo "\`\`\`"
            (${UPATH}/plugins/${PLUGIN} help)
+           echo "\`\`\`"
        fi
     done
     exit 0
