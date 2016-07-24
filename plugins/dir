@@ -7,12 +7,12 @@ _help(){
     usage: u dir [ tree | tree-size | delete | help ]
 
     Examples:
-      u dir tree                  # tree view of folders in the current path
-      u dir tree-size             # tree view of folders in the current path with size
-      u dir tree /path            # tree view of folders in a specific path
+      u dir tree                   # tree view of folders in the current path
+      u dir tree-size              # tree view of folders in the current path with size
+      u dir tree /your/dir         # tree view of folders in a specific path
 
-      u dir delete empty          # delete empty folders recursively in the current path
-      u dir delete empty /path    # delete empty folders recursively in a specific path
+      u dir delete empty           # delete empty folders recursively in the current path
+      u dir delete empty /your/dir # delete empty folders recursively in a specific path
 
 __EOF__
 
