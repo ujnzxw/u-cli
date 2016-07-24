@@ -1,4 +1,7 @@
 # u-cli
+A Ubuntu command line tool for developers!
+With this tool you will no longer need to remember the weird commands in Linux to configure! When you run a function, the executed command is displayed and that helps you memorize each of the Utilities for future usage.
+
 
 
 ## The difference
@@ -7,10 +10,10 @@
 
 * Its main purpose is to manage administrative tasks and do it easier
 * It doesn't install 3rd party tools because it doesn't have dependencies
-* Tools need: bash, sed, awk, grep, apt, gsettings-desktop-schemas
+* Tools need: bash, sed, awk, grep, apt, gsettings-desktop-schemas.
   They are normally pre-installed in almost all desktop distros.
 * The installation is very easy and doesn't require intervention
-* It only uses OS X commands
+* It only uses Linux shell commands.
 
 
 
@@ -18,11 +21,11 @@
 
 To **install** or **update** u-cli you can run this command:
 
-`curl -fsSL https://raw.githubusercontent.com/rgcr/u-cli/master/install.sh | sh`
+`curl -fsSL https://raw.githubusercontent.com/ujnzxw/u-cli/master/install.sh | sh`
 
 You can also install it in a different path
 
-`INSTALL_DIR=$HOME/.u-cli sh <(curl -fsSL https://raw.githubusercontent.com/rgcr/u-cli/master/install.sh)`
+`INSTALL_DIR=$HOME/.u-cli sh <(curl -fsSL https://raw.githubusercontent.com/ujnzxw/u-cli/master/install.sh)`
 
 
 _Note: You should reload your shell in both cases_
@@ -30,7 +33,7 @@ _Note: You should reload your shell in both cases_
 ## Usage
 
 ```
-usage:  m [OPTIONS] COMMAND [help]
+Uage:  u [OPTIONS] COMMAND [help]
 
     OPTIONS
         --update        update u-cli to the latest version
@@ -38,390 +41,310 @@ usage:  m [OPTIONS] COMMAND [help]
 
     COMMANDS:
         help
+        app
         battery
         bluetooth
         dir
         disk
-        dns
-        dock
-        finder
         firewall
-        gatekeeper
+        group
         hostname
         info
+        ip
         lock
-        ntp
-        network
-        nosleep
+        panel
+        proxy
+        reboot
         restart
-        safeboot
-        screensaver
         service
         shutdown
         sleep
-        timezone
         trash
-        user
         volume
-        vpn
         wallpaper
         wifi
-
 ```
 
-####  Battery:
+#### List:
 ```
-    usage: m battery [ status | help ]
+    Usage: u list
 
     Examples:
-      m battery status    # get the battery status
+        u list h[elp]    # show this help
+        u list           # list all the availible commands
 ```
 
-#### Bluetooth:
+#### App:
 ```
-    usage: m bluetooth [ status | enable | disable | help ]
+    Usage: u app [ chrome | win7 | help ]
 
     Examples:
-      m bluetooth status    # bluetooth status
-      m bluetooth enable    # turn on bluetooth
-      m bluetooth disable   # turn off bluetooth
+      u app help         # show this help
+      u app chrome       # setup chrome
+      u app win7         # setup win7 in Virtual Box
+
 ```
 
-
-####  Disk:
+#### Battery:
 ```
-    usage: m disk [ ls | list | info | fs | filesystems | ejectall | verify | repair | help ]
+    Usage: u battery [ status | help | cmd ]
 
     Examples:
-      m disk ls                                 # list disks
-      m disk list                               # list disks
-      m disk list /dev/disk0                    # list a specific disk
-
-      m disk fs                                 # list available filesystems for formatting
-      m disk filesystems                        # list available filesystems for formatting
-
-      m disk info /dev/disk0                    # display information
-
-      m disk ejectall                           # eject all mountable volumes
-
-      m disk verify volume  /Volume/MyVol       # verify volume
-      m disk verify disk /dev/disk0             # verify disk
-
-      m disk repair volume /Volume/MyVol        # repair volume
-      m disk repair disk /dev/disk0             # repair disk
-
-      m disk format MS-DOS MYNAME  /dev/disk2             # format the entire disk with a windows format (MS-DOS)
-      m disk format volume MS-DOS MYNAME /Volumes/myvol   # format the volume with a windows format(MS-DOS)
-
-      m disk reformat /Volumes/myvol                      # reformat a volume
-      m disk rename CURRENTNAME NEWNAME                   # rename a volume
-
+      u battery status    # get the battery status
+      u battery cmd       # get the battery command
 ```
 
-#### Dns:
+
+####  Bluetooth:
 ```
-    usage:  m dns [ flush | help ]
+    Usage: u bluetooth [ status | enable | disable | restart | force-reload | help ]
 
     Examples:
-      m dns flush       # flushes local DNS
+      u bluetooth status         # bluetooth status
+      u bluetooth enable         # turn on bluetooth
+      u bluetooth disable        # turn off bluetooth
+      u bluetooth restart        # restart bluetooth
+      u bluetooth force-reload   # force reload bluetooth
 
-```
-
-#### Dock:
-```
-    usage: m dock [ showdelay | autohide | magnification | position | addblankspace | addrecentitems | help ]
-
-    Examples:
-      m dock showdelay x.x          # Changes how long the Dock takes to show up when auto-hide is enabled
-      m dock autohide YES           # Enable Dock's auto hide feature
-      m dock autohide NO            # Disable Dock's auto hide feature
-      m dock magnification YES      # Turn magnification on
-      m dock magnification NO       # Turn magnification off
-      m dock position BOTTOM        # Change Dock's position to the bottom of the screen
-      m dock position LEFT          # Change Dock's position to the left of the screen
-      m dock position RIGHT         # Change Dock's position to the right of the screen
-      m dock addblankspace          # Add a blank space (separator) to the Dock
-      m dock addrecentitems         # Add a stack containg your recent items to the Dock
-                                    #  (You can change the stack's type by right clicking on it)
 
 ```
 
 #### Dir:
 ```
-    usage: m dir [ tree | delete | help ]
+    usage: u dir [ tree | tree-size | delete | help ]
 
     Examples:
-      m dir tree        # tree view of folders in the current path
-      m dir tree /path  # tree view of folders in a specific path
+      u dir tree                  # tree view of folders in the current path
+      u dir tree-size             # tree view of folders in the current path with size
+      u dir tree /path            # tree view of folders in a specific path
 
-      m dir delete empty          # delete empty folders recursively in the current path
-      m dir delete empty /path    # delete empty folders recursively in a specific path
+      u dir delete empty          # delete empty folders recursively in the current path
+      u dir delete empty /path    # delete empty folders recursively in a specific path
+
 ```
 
-#### Finder:
+#### Disk:
 ```
-    usage: m finder [ showhiddenfiles | showfileextensions | help  ]
+    Usage: u disk [ ls | list | info | help ]
 
     Examples:
-      m finder showhiddenfiles           # get the current status
-      m finder showhiddenfiles YES       # show hidden files
-      m finder showhiddenfiles NO        # no show hidden files
-      m finder showextensions            # get the current status
-      m finder showextensions YES        # show all file extensions
-      m finder showextensions NO         # don't show all file extensions
+      u disk ls                                 # list disks
+      u disk list                               # list disks
+      u disk list /dev/disk0                    # list a specific disk
+      u disk info /dev/disk0                    # print info for a specific disk
 ```
 
 #### Firewall:
 ```
-    usage: m firewall [ status | enable | disable | add | help ]
+    Usage: u firewall [ status | enable | disable | help ]
 
     Examples:
-       m firewall status                # Show status
-       m firewall enable                # Enable firewall
-       m firewall disable               # Disable firewall
-       m firewall add /path/to/file     # Add app to firewall
-```
-
-#### Gatekeeper:
-```
-    usage: m gatekeeper [ status | list | ls | enable | disable | create | help ]
-
-    Examples:
-      m gatekeeper status                               # gatekeeper status
-      m gatekeeper list                                 # list rules
-
-      m gatekeeper enable                               # enable gatekeeper
-      m gatekeeper disable                              # disable gatekeeper
-
-      m gatekeeper enable MYRULE                        # enable rule
-      m gatekeeper disable MYRULE                       # disable rule
-
-      m gatekeeper create  RULENAME /path/to/program    #  Create a rule for the application
+       u firewall status                # Show status
+       u firewall enable                # Enable firewall
+       u firewall disable               # Disable firewall
 
 ```
 
 #### Group:
 ```
-    usage: m group [ list | ls | info | adduser | removeuser | ismember | help ]
+    Usage: u group [ list | ls | info | adduser | removeuser | ismember | help ]
 
     Examples:
-      m group list                          # get list of groups
-      m group info mygroup                  # display group information
+      u group list                          # get list of groups
+      u group info mygroup                  # display group information
 
-      m group adduser myuser mygroup        # add an user to a specific group
-      m group removeuser myuser mygroup     # remove an user from a specific group
+      u group adduser myuser mygroup        # add an user to a specific group
+      u group removeuser myuser mygroup     # remove an user from a specific group
 
-      m group ismember myuser mygroup       # show if the user is a member of a specific group
+      u group ismember myuser mygroup       # show if the user is a member of a specific group
 
 ```
 
 #### Hostname:
 ```
-    usage: m hostname [ help ]
+    Usage: u hostname [ help ]
 
     Examples:
-      m hostname                # get the current hostname information (computername, hostname, localhostname and netbiosname)
-      m hostname newhostname    # set a new hostname (computername, hostname, localhostname, netbiosname)
+      u hostname ls|list                 # get the current hostname information
+      u hostname changeto                # set a new hostname
+      u hostname help                    # Show this help
 
-      m hostname help           # only shows this help
 ```
 
 #### Info:
 ```
-    usage: m info [ help ]
+    Usage: u info [ help ]
 
     Examples:
-      m info        #  print Mac OS X operating system version information
+      u info                     # print Operating System infomation
+      u info cpu                 # print CPU infomation
+      u info pci                 # print PCI infomation
+      u info usb                 # print USB infomation
+      u info disk                # print disk all the disk infomation
+      u info diskinfo /my/disk   # print more about specific disk
+      u info bios                # print BIOS infomation
+      u info dmi                 # print DMI infomation
+      u info hw|hardware         # Extract detailed information on the hardware configuration of the machine
+      u info sw|os               # print Operating System infomation
+      u info mem[ory]            # print memory infomation
+
+```
+
+#### IP:
+```
+    Usage:  u ip [ all | help ]
+
+    Examples:
+      u ip h[elp]                # show this help
+      u ip                       # show your ip
+      u ip a[all]                # list all your ip addr connected to remote server
 ```
 
 #### Lock:
 ```
-    usage:  m lock [ help ]
+    Usage: u lock [ help ]
 
     Examples:
-      m lock      # lock session
+      u lock h[elp]       # show this help info
+      u lock              # lock the ubuntu
+
 ```
 
-#### Ntp:
+#### Panel:
 ```
-    usage: m ntp [ status | enable | disable | set | help ]
-
-    Examples:
-      m ntp status                          # status of the network time service
-      m ntp enable                          # enable clock to use network time
-      m ntp disable                         # disable clock to use network time
-      m ntp set timehost1.net.sap.corp      # set network time server
-```
-
-#### Network:
-```
-    usage:  m network [ ls | list | location | help ]
+    Usage: u panel [ hide | help ]
 
     Examples:
-      m network ls                          # list network interfaces
-      m network location                    # get current location
-      m network location ls                 # list locations
-      m network location create XYZ         # create a location
-      m network location delete XYZ         # delete a location
-      m network location switch XYZ         # switch location
+      u panel help         # show this help
+      u panel hide on      # auto hiding the Unity launcher
+      u panel hide off     # unhiding the Unity launcher
+
 ```
 
-#### Nosleep:
 ```
-    usage: m nosleep [ until | help ]
+
+#### Proxy:
+```
+    Usage:  u proxy [ ls | list | none | man | auto | help ]
 
     Examples:
-      m nosleep until 3600            # no sleep until 3600 seconds
-      m nosleep until my_script.sh    # no sleep until the script ends
+      u proxy ls                    # list network proxy
+      u proxy help                  # show this help
+
+      u proxy model none            # set proxy mode none
+      u proxy model man             # set proxy mode manual
+      u proxy model auto            # set proxy mode automatic
+      u proxy set                   # set a proxy
+
+```
+
+#### Reboot:
+```
+    Usage:  u  reboot [ f | force | help ]
+
+    Examples:
+      u reboot h[elp]    # show this help
+      u reboot f[orce]   # reboot computer (without confirmation)
+      u reboot           # reboot computer (needs confirmation)
 ```
 
 #### Restart:
 ```
-    usage:  m restart [ -f | --force | help ]
+    Usage:  u restart [ -f | --force | help ]
 
     Examples:
-      m restart     # restart computer (needs confirmation)
-      m restart -f  # restart computer (without confirmation)
-```
-
-#### Safeboot:
-```
-    usage: m safeboot [ status | enable | disable | help ]
-
-    Examples:
-      m safeboot status     # get the boot args
-      m safeboot enable     # enable safe boot
-      m safeboot disable    # disable safeboot
-```
-
-#### Screensaver:
-```
-    usage: m screensaver [ askforpassword | help ]
-
-    Examples:
-      m screensaver                         # launch screensaver
-
-      m screensaver askforpassword          #  get the current status
-      m screensaver askforpassword YES      #  enable password requirement to unlock
-      m screensaver askforpassword NO       #  disable password requirement to unlock
+      u restart h[elp]    # show this help
+      u restart           # restart computer (needs confirmation)
+      u restart -f[orce]  # restart computer (without confirmation)
 ```
 
 #### Service:
 ```
-    usage: m service [ --status-all | --list |  --ls | start | stop | load | unload | help ]
+    Usage: u service [ --status-all | list | ls | start | stop | restart | help ]
 
 
     Examples:
-      m service --status-all                        # list all services
+      u service h[elp]                              # show this help
 
-      m service --list                              # list all services
-      m service --ls                                # list all services
-      m service --ls com.apple.sessionlogoutd       # show information about a specific service
+      u service --status-all                        # list all services
+      u service list                                # list all services
+      u service ls                                  # list all services
+      u service ls myservice                        # show status about a specific service
 
-      m service start com.apple.sessionlogoutd      # start a service
-      m service stop com.apple.sessionlogoutd       # stop a service
+      u service start myservice                     # start a service
+      u service stop myservice                      # stop a service
 
-      m service load com.apple.sessionlogoutd       # load a service
-      m service unload com.apple.sessionlogoutd     # unload a service
+      u service restart myservice                   # start a service
 
 ```
 
 #### Shutdown:
 ```
-    usage:  m  shutdown [-f | --force | help ]
+    Usage:  u  shutdown [ f | force | help ]
 
     Examples:
-      m shutdown     # shutdown computer (needs confirmation)
-      m shutdown -f  # shutdown computer (without confirmation)
+      u shutdown h[elp]         # show this help
+      u shutdown [--]f[orce]    # shutdown computer (without confirmation)
+      u shutdown                # shutdown computer (needs confirmation)
 ```
 
 #### Sleep:
 ```
-    usage: m sleep [ help ]
+    Usage: u sleep [ help ]
 
     Examples:
-      m sleep       #  put the mac to sleep
-```
+      u sleep h[elp]      #  show this help
+      u sleep             #  put the ubuntu to sleep/suspend
 
-#### Timezone:
-```
-    usage: m timezone [ list | ls | set | help ]
-
-    Examples:
-      m timezone                    # get current timezone
-      m timezone ls                 # list available timezones
-      m timezone set Europe/Berlin  # set timezone
 ```
 
 #### Trash:
 ```
-    usage: m trash [ status | clean | help ]
+    Usage: u trash [ status | mv | clean | help ]
 
     Examples:
-      m trash status    # get trash info
-      m trash clean     # clean trash
-```
+      u trash h[elp]         # show this help
+      u trash status         # get trash info
+      u trash put filename   # move file to trash
+      u trash list           # list file in trash
+      u trash rm  filename   # remove one file in trash
+      u trash restore        # restore file from trash for current path
+      u trash clean[empty]   # clean trash
 
-#### User
-```
-    usage: m user [ list | ls | info | create | delete | help ]
-
-    Examples:
-      m user ls                # list users
-      m user info demouser     # display user information
-
-      m user create            # create a user, it will ask you the below information
-                                    Username:
-                                    Full name:
-                                    Shell [/bin/bash]:
-                                    Password:
-
-      m user delete demouser   # delete user
 ```
 
 #### Volume:
 ```
-    usage:  m volume [ level(0-100) | mute | unmute | ismute ]
+    Usage: u volume [ + | - | mute | unmute ]
 
     Examples:
-      m volume 70     # set the volume to 70 %
-      m volume        # get the volume level
-      m volume mute   # set mute
-      m volume unmute # unset mute
-      m volume ismute # check the volume status
-```
-
-#### VPN:
-```
-    usage:  m vpn [ ls | list | start | stop | status | help ]
-
-    Examples:
-      m vpn ls                  # list VPN connections
-      m vpn start VPN           # start vpn connection named VPN
-      m vpn stop VPN            # stop vpn connection named VPN
-      m vpn status VPN          # status vpn connection named VPN
+      u volume +              # increase volume by 5%
+      u volume -              # decrease volume by 5%
+      u volume mute           # volume mute
+      u volume unmute         # volume unmute
 ```
 
 #### Wallpaper:
 ```
-    usage: m wallpaper [ /path/to/file.jpg | help ]
+    Usage: u wallpaper [ /path/to/file.jpg | help ]
 
     Examples:
-      m wallpaper ./wallpapers/tree.jpg  # set wallpaper
+      u wallpaper h[elp]                   # show this help
+      u wallpaper ./wallpapers/tree.jpg    # set wallpaper
 ```
 
 #### Wifi:
 ```
-    usage:  m wifi [ scan | off | on | connect | help ]
+    Usage:  u wifi [ status | scan | off | on | connect | disconnect | passwd | help ]
 
     Examples:
-      m wifi status                  # wifi status
-      m wifi scan                    # scan wifi
-      m wifi showpassword ESSID      # show wifi network password
-      m wifi history                 # wifi connection history
-      m wifi off                     # turn off your wifi
-      m wifi on                      # turn on your wifi
-      m wifi connect ESSID PASSWORD  # join a wifi network
+      u wifi status                   # wifi status
+      u wifi scan                     # scan wifi
+      u wifi off                      # turn off your wifi
+      u wifi on                       # turn on your wifi
+      u wifi connect SSID PASSWORD    # connect a wifi network
+      u wifi disconnect [SSID]        # disconnect current wifi network
+      u wifi [show]passw[or]d [SSID]  # show wifi network password
 ```
 
 ## Contributing
@@ -434,10 +357,10 @@ usage:  m [OPTIONS] COMMAND [help]
 
 ## TODO:
 * Add more plugins
-* Add a brew formula
 * Improve the help
 * Improve the installation script
 * Auto input the command prifix (when print help info)
+* Make the application name (u) customizable during installation
 
 ## Thanks
 [guarinogabriel/Mac-CLI](https://github.com/guarinogabriel/Mac-CLI) and [rgcr/m-cli](https://github.com/rgcr/m-cli) are great sources of inspiration.
