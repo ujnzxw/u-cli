@@ -4,7 +4,7 @@
 
 _help()
 {
-    cat 1>&2 <<__EOF__
+    cat<<__EOF__
     Usage: u app [ chrome | win7 | help ]
 
     Examples:
