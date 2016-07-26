@@ -3,7 +3,7 @@
 . $UPATH/utils/func.sh
 
 # local note path
-NOTE_PATH=$UPATH/database/note
+[ -z $NOTE_PATH ] && NOTE_PATH=$UPATH/database/note
 
 _help()
 {
@@ -16,6 +16,7 @@ _help()
       u note d[el] notename.md                # delete a note
       u note e[dit]|vi[m]  notename.md        # edit an note
       u note ls|list                          # list all aviliable notes
+      u note cat notename.md                  # dump note content
 
 __EOF__
 }
@@ -73,6 +74,13 @@ _update()
 
 
 }
+_cat()
+{
+    [ -z $1 ] && _help && exit 1
+    note_name=${1}
+    cat ${NOTE_PATH}/${note_name}
+}
+
 case $1 in
     h|help)
         _help
@@ -93,6 +101,9 @@ case $1 in
         shift
         _list "$@"
         ;;
+    cat)
+        shift
+        _cat "$@"
     *)
         _help
         ;;
