@@ -47,3 +47,5 @@ COMMAND=$1; shift;
 [ ! -f ${UPATH}/plugins/${COMMAND} ] && ( ( usage ) | more ) && exit 1
 ${UPATH}/plugins/${COMMAND} "$@"
 
+# Reference
+#[ Linux shell 之 提取文件名和目录名的一些方法](http://blog.csdn.net/ljianhui/article/details/43128465)
