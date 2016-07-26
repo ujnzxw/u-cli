@@ -1,0 +1,102 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+# local note path
+NOTE_PATH=$UPATH/database/note
+
+_help()
+{
+    cat <<__EOF__
+    Usage: u note [ add | del | edit | list | help]
+
+    Examples:
+      u note h[elp]                           # display this help
+      u note a[dd] notename.md                # add a note
+      u note d[el] notename.md                # delete a note
+      u note e[dit]|vi[m]  notename.md        # edit an note
+      u note ls|list                          # list all aviliable notes
+
+__EOF__
+}
+
+_list()
+{
+    [ ! -d $NOTE_PATH ] && echo "Note Path is not exist!" && exit 1
+    if [ "$(ls -A $NOTE_PATH)" ];then
+        ls -l $NOTE_PATH
+    else
+        echo "NO any note..."
+    fi
+}
+
+_add()
+{
+    [ -z $1 ] && _help && exit 1
+    note_name=${1}
+    while [ -f ${NOTE_PATH}/${note_name} ]; do
+        echo "The note name is dupicated! Please enter another one."
+        read -r -p "New hostname: " $note_name
+    done
+    touch ${NOTE_PATH}/${note_name} && echo "The note was created."
+    echo "Please input ENTER to edit it..."
+    read $input
+    if [ -z $input ];then
+        vi ${NOTE_PATH}/${note_name}
+    else
+        echo "Exit without any input for new note: $note_name"
+    fi
+}
+_delete()
+{
+    [ -z $1 ] && _help && exit 1
+    note_name=${1}
+    [ ! -f ${NOTE_PATH}/${note_name} ] && echo "The note name you entered is not existed!" && exit 1
+    if confirm "Remove note: $note_name(y/N)?"; then
+        rm ${NOTE_PATH}/${note_name}
+    else
+        echo "Do nothing for note: $note_name." && exit 1
+    fi
+
+}
+_update()
+{
+    [ -z $1 ] && _help && exit 1
+    note_name=${1}
+
+    [ ! -f ${NOTE_PATH}/${note_name} ] && echo "The note name you entered is not existed!" && exit 1
+    if confirm "Edit note: $note_name(y/N)?"; then
+        vi ${NOTE_PATH}/${note_name}
+    else
+        echo "Do nothing for note: $note_name." && exit 1
+    fi
+
+
+}
+case $1 in
+    h|help)
+        _help
+        ;;
+    a|add)
+        shift
+        _add "$@"
+        ;;
+    d|del|delete)
+        shift
+        _delete "$@"
+        ;;
+    u|update|e|edit|vi|vim)
+        shift
+        _update "$@"
+        ;;
+    ls|list)
+        shift
+        _list "$@"
+        ;;
+    *)
+        _help
+        ;;
+esac
+
+# Reference
+# [Sed Command in Linux - Delete Lines from a File](http://www.yourownlinux.com/2015/04/sed-command-in-linux-delete-lines-from-file.html)
