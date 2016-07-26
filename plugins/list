@@ -17,6 +17,7 @@ _list_all_cmd()
 {
     for i in ${UPATH}/plugins/*; do
         PLUGIN=${i##*/}
+        # ignore plugin 'list' itself
         if [ "$1" != "$PLUGIN" ]; then
            echo "u $PLUGIN"
            echo "==========="
