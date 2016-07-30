@@ -86,9 +86,9 @@ install_from_git()
 # Check if /bin/sh is linked to /bin/bash
 command ls -l /bin/sh | grep bash > /dev/null 2>&1 ||
 {
-	install_echo >&2 "/bin/sh is not linked to /bin/bash"
-	install_echo >&2 "Please use ln to link it first!"
-	exit 1
+    install_echo >&2 "/bin/sh is not linked to /bin/bash"
+    install_echo >&2 "Please use ln to link it first!"
+    exit 1
 }
 
 if has "git"; then
