@@ -361,6 +361,8 @@ Uage:  u [OPTIONS] COMMAND [help]
 * Improve the installation script
 * Auto input the command prifix (when print help info)
 * Make the application name (u) customizable during installation
+* Add returning the called command feature
+* Add figlet
 
 ## Thanks
 [guarinogabriel/Mac-CLI](https://github.com/guarinogabriel/Mac-CLI) and [rgcr/m-cli](https://github.com/rgcr/m-cli) are great sources of inspiration.
@@ -376,4 +378,4 @@ Uage:  u [OPTIONS] COMMAND [help]
 
 
 ---
-[MIT License](LICENSE.md) © Steven ZHAO
+[MIT License](LICENSE.md) © 2016 Steven ZHAO
