@@ -82,26 +82,26 @@ _check_proxy()
 # change proxy to none/mamual/auto
 _set_proxy_model()
 {
-	case $1 in
-		none)
-			echo " Set proxy mode - none"
-			gsettings set org.gnome.system.proxy mode none
-			echo "Operation completed successfully."
-			;;
+    case $1 in
+        none)
+            echo " Set proxy mode - none"
+            gsettings set org.gnome.system.proxy mode none
+            echo "Operation completed successfully."
+            ;;
 
-		man|manual)
-			echo " Set proxy mode - manual"
-			gsettings set org.gnome.system.proxy mode manual
-			echo "Operation completed successfully."
-			;;
-		auto)
-			echo " Set proxy mode - automatic"
-			gsettings set org.gnome.system.proxy mode auto
-			echo "Operation completed successfully."
-			;;
+        man|manual)
+            echo " Set proxy mode - manual"
+            gsettings set org.gnome.system.proxy mode manual
+            echo "Operation completed successfully."
+            ;;
+        auto)
+            echo " Set proxy mode - automatic"
+            gsettings set org.gnome.system.proxy mode auto
+            echo "Operation completed successfully."
+            ;;
         *)
-			_help && exit 1;
-	esac
+            _help && exit 1;
+    esac
 }
 
 case $1 in
