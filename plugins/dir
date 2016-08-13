@@ -4,9 +4,11 @@
 
 _help(){
     cat<<__EOF__
-    usage: u dir [ tree | tree-size | delete | help ]
+    usage: u dir [ chmod | tree | tree-size | delete | help ]
 
     Examples:
+      u dir chmod -f /your/dir 644 # change all the files to 644 (-rw-r--r--) in /your/dir
+      u dir chmod -d /your/dir 755 # change all the directories to 755 (-rwxr-xr-x) in /your/dir
       u dir tree                   # tree view of folders in the current path
       u dir tree-size              # tree view of folders in the current path with size
       u dir tree /your/dir         # tree view of folders in a specific path
@@ -47,23 +49,40 @@ _delete(){
     esac
 }
 
+_chmod(){
+    case $1 in
+    -f|f)
+        find ${2} -type f -exec chmod ${3} {} \;
+        ;;
+    -d|d)
+        find ${2} -type d -exec chmod ${3} {} \;
+        ;;
+    *)
+        _help && exit 1
+        ;;
+    esac
+}
 
 
 case $1 in
     help)
         _help
         ;;
+    chmod)
+        shift
+        _chmod "$@"
+        ;;
     tree)
         shift
-        _tree_dirs $@
+        _tree_dirs "$@"
         ;;
     tree-size)
         shift
-        _tree_dirs_with_size $@
+        _tree_dirs_with_size "$@"
         ;;
     delete)
         shift;
-        _delete $@
+        _delete "$@"
         ;;
     *)
         _help
