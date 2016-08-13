@@ -1,0 +1,56 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+_help()
+{
+    cat<<__EOF__
+    Usage: u tool [ tpp | figlet | help ]
+
+    Examples:
+      u tool h[elp]       # show this help
+      u tool tpp          # Text Presentation Program
+      u tool figlet       # display large text characters
+      u tool top10cmd     # display your top 10 commands
+
+__EOF__
+#    $cmd=${!!}
+#    sum_cmd=''
+#    read -p ${cmd} $sub_cmd
+#    ${cmd} $sub_cmd
+#
+}
+_tpp()
+{
+    tpp $@
+}
+_figlet()
+{
+    figlet $@
+}
+
+_top10cmd()
+{
+    history | awk '{print $2}' | sort | uniq -c | sort -rn | head -
+}
+case $1 in
+    h|help)
+        _help
+        ;;
+    tpp)
+        shift
+        _tpp "$@"
+        ;;
+    figlet)
+        shift
+        _figlet "$@"
+        ;;
+    top10cmd|top10)
+        shift
+        _top10cmd "$@"
+        ;;
+    *)
+        _help
+        ;;
+esac
+

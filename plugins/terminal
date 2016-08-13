@@ -1,0 +1,52 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+_help()
+{
+    cat<<__EOF__
+    Usage: u terminal [ full-screen| fs | maximize | max | zoom | help ]
+
+    Examples:
+      u terminal h[elp]             # show this help
+      u terminal full-screen|fs     # terminal full-screen
+      u terminal maximize|max       # terminal maximize
+      u terminal zoom SIZE          # SIZE can be 0.5/1/2, etc.
+
+__EOF__
+}
+
+_full()
+{
+    gnome-terminal --full-screen
+}
+_max()
+{
+    gnome-terminal  --maximize
+}
+_zoom()
+{
+    gnome-terminal  --zoom ${1}
+}
+
+case $1 in
+    h|help)
+        _help
+        ;;
+    full-screen|fs)
+        shift
+        _full "$@"
+        ;;
+    maximize|max)
+        shift
+        _max "$@"
+        ;;
+    zoom)
+        shift
+        _zoom "$@"
+        ;;
+    *)
+        _help
+        ;;
+esac
+

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+_help()
+{
+    cat<<__EOF__
+    Usage: u getname [ queryname | help ]
+
+    Examples:
+      u getname queryhandle         # get name and mail and phone number by handle
+
+__EOF__
+}
+case $1 in
+    h|help)
+        _help
+        ;;
+    *)
+        [ -z $1 ] && _help && exit 1
+        rsh -l xzhao027 135.2.51.5 /home/xzhao027/bin/getname $1
+        ;;
+esac
+
