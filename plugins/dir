@@ -50,12 +50,13 @@ _delete(){
 }
 
 _chmod(){
+    ROOT=$( pwd )
     case $1 in
     -f|f)
-        find ${2} -type f -exec chmod ${3} {} \;
+        find ${ROOT}/${2} -type f -exec chmod ${3} {} \;
         ;;
     -d|d)
-        find ${2} -type d -exec chmod ${3} {} \;
+        find ${ROOT}/${2} -type d -exec chmod ${3} {} \;
         ;;
     *)
         _help && exit 1
