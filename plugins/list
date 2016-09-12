@@ -20,7 +20,7 @@ _list_all_cmd()
         # ignore plugin 'list' itself
         if [ "$1" != "$PLUGIN" ]; then
            echo "u $PLUGIN"
-           echo "==========="
+           echo "-----------"
            echo
            echo "\`\`\`"
            (${UPATH}/plugins/${PLUGIN} help)
