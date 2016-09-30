@@ -369,10 +369,15 @@ Uage:  u [OPTIONS] COMMAND [help]
 
 ## Reference
 [Wifi password](http://askubuntu.com/questions/156861/find-the-password-for-the-currently-connected-wireless-network)
+
 [hostnamectl, timedatectl, localectl](http://askubuntu.com/a/516898)
+
 [Volume Settings](http://askubuntu.com/a/97945)
+
 [Randomly changes the wallpaper from a given directory](http://askubuntu.com/a/510135)
+
 [trash-cli](https://github.com/andreafrancia/trash-cli)
+
 [List all IP addresses connected to your Server](https://www.mkyong.com/linux/list-all-ip-addresses-connected-to-your-server/)
 
 
