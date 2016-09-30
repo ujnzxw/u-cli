@@ -33,7 +33,7 @@ _Note: You should reload your shell in both cases_
 ## Usage
 
 ```
-Uage:  u [OPTIONS] COMMAND [help]
+Usage:  u [OPTIONS] COMMAND [help]
 
     OPTIONS
         --update        update u-cli to the latest version
