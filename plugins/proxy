@@ -111,9 +111,9 @@ case $1 in
     ls|list)
         _check_proxy
         ;;
-    mode)
+    mode|model)
         shift
-        [ -z "$1" ] && help && exit 1;
+        [ -z "$1" ] && _help && exit 1;
         _set_proxy_model $@
         ;;
 
