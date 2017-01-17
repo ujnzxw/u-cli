@@ -69,11 +69,11 @@ confirm()
     read -r -p "${1:-Are you sure (default NO)? [y/N]} " response
     case $response in
         [yY][eE][sS]|[yY])
-                true
-                ;;
+            true
+            ;;
         *)
-              false
-                ;;
+            false
+            ;;
     esac
 }
 
