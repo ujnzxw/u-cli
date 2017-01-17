@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# include files
+source ./common.sh
+
 PKG="u-cli"
 GIT_URL="https://github.com/ujnzxw/u-cli.git"
 INSTALL_DIR="${INSTALL_DIR}"
