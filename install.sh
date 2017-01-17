@@ -1,30 +1,11 @@
 #!/bin/sh
 
-# include files
-source ./common.sh
-
 PKG="u-cli"
 GIT_URL="https://github.com/ujnzxw/u-cli.git"
 INSTALL_DIR="${INSTALL_DIR}"
 
-
-has()
-{
-    type "$1" > /dev/null 2>&1
-}
-confirm()
-{
-    # call with a prompt string or use a default
-    read -r -p "${1:-Are you sure (default NO)? [y/N]} " response
-    case $response in
-        [yY][eE][sS]|[yY])
-            true
-            ;;
-        *)
-            false
-            ;;
-    esac
-}
+# include files
+source ./common.sh
 
 install_echo()
 {
