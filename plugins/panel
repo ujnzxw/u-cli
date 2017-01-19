@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. $UPATH/utils/func.sh
+source $UPATH/utils/func.sh
 
 _help()
 {
