@@ -1,0 +1,43 @@
+#!/bin/sh
+
+. $UPATH/utils/func.sh
+
+_help()
+{
+    cat<<__EOF__
+    Usage: u app [ chrome | win7 | help ]
+
+    Examples:
+      u app h[elp]       # show this help
+      u app chrome       # setup chrome
+      u app win7         # setup win7 in Virtual Box
+
+__EOF__
+#    $cmd=${!!}
+#    sum_cmd=''
+#    read -p ${cmd} $sub_cmd
+#    ${cmd} $sub_cmd
+#
+}
+_chrome()
+{
+    if _has "google-chrome"; then
+        google-chrome > /dev/null 2>&1 &
+    else
+        echo "No chrome application found!"
+    fi
+}
+_win7()
+{
+    vbox_name="win7-steven-dev-base_default_1466847584895_25777"
+    VBoxManage startvm ${vbox_name} --type headless > /dev/null 2>&1 &
+}
+case $1 in
+    h|help)
+        _help
+        ;;
+    *)
+        gsettings set org.gnome.system.proxy ignore-hosts "['localhost', '127.0.0.0/8', '::1', '192.168.0.0/16', 'ihgpweb.ih.lucent.com', '10.135.0.0/16', 'lssweb2.ih.lucent.com']"
+        ;;
+esac
+
