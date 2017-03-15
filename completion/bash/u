@@ -1,4 +1,8 @@
 # copy this file into /usr/local/etc/bash_completion.d/
+# for ubuntu(14.04):
+#  1. copy this file to /usr/share/bash-completion/completions
+#  2. enable competion in /etc/bash.bashrc
+#  3. source /etc/bash_completion
 
 _u_sub () {
     local $prev="$1"
@@ -7,170 +11,94 @@ _u_sub () {
         help)
             ;;
         battery)
-            subcommands=(status help)
+            subcommands=(status help cmd)
             ;;
         bluetooth)
-            subcommands=(status enable disable help)
+            subcommands=(status
+                        enable
+                        disable
+                        restart
+                        force-reload
+                        help)
             ;;
         dir)
-            subcommands=(tree delete help)
+            subcommands=(chmod tree tree-size delete help)
             ;;
         disk)
-            subcommands=(
-                ls list fs filesystems info ejectall verify
-                repair format reformat rename help
-            )
-            ;;
-        dns)
-            subcommands=(flush)
-            ;;
-        dock)
-            subcommands=(
-                showdelay autohide magnification
-                position addblankspace addrecentitems
-            )
-            ;;
-        finder)
-            subcommands=(showhiddenfiles showextensions help)
+            subcommands=(ls list info help)
             ;;
         firewall)
-            subcommands=(status enable disable add help)
+            subcommands=(status enable disable help)
             ;;
-        gatekeeper)
-            subcommands=(status list enable disable create help)
+        getname)
+            subcommands=(help)
             ;;
         group)
             subcommands=(list info adduser removeuser ismember help)
             ;;
         hostname)
-            subcommands=(help)
+            subcommands=(ls list changeto help)
             ;;
         info)
+            subcommands=(help)
+            ;;
+        ip)
+            subcommands=(help)
+            ;;
+        list)
             subcommands=(help)
             ;;
         lock)
             subcommands=(help)
             ;;
-        network)
-            subcommands=(ls location help)
+        note)
+            subcommands=(h help a add d del vi ls list cat help)
             ;;
-        nosleep)
-            subcommands=(until help)
+        panel)
+            subcommands=(hide help)
             ;;
-        ntp)
-            subcommands=(status enable disable set help)
+        proxy)
+            subcommands=(ls model set help)
             ;;
-        restart)
-            subcommands=(-f help)
-            ;;
-        safeboot)
-            subcommands=(status enable disable help)
-            ;;
-        screensaver)
-            subcommands=(askforpassword help)
+        reboot)
+            subcommands=(help)
             ;;
         service)
             subcommands=(
-                --status-all --list --ls start stop load unload help
+                --status-all list ls start stop restart  help
             )
             ;;
         shutdown)
-            subcommands=(-f help)
+            subcommands=(help)
             ;;
         sleep)
-            subcommands=( help)
+            subcommands=(h help)
             ;;
-        timezone)
-            subcommands=(ls set help)
+        terminal)
+            subcommands=(full-screen  fs max maximize zoon help)
+            ;;
+        tool)
+            subcommands=(tpp figlet top10cmd help)
             ;;
         trash)
-            subcommands=(status clean help)
+            subcommands=(status put list rm restore clean help)
             ;;
         user)
             subcommands=(ls info create delete help)
             ;;
         volume)
-            subcommands=(mute unmute ismute help)
-            ;;
-        vpn)
-            subcommands=(list status stop start help)
+            subcommands=(mute unmute + - help)
             ;;
         wallpaper)
             subcommands=(help *)
             ;;
         wifi)
             subcommands=(
-                status scan showpassword history on off connect help
+                status scan showpassword on off disconnect connect help
             )
             ;;
     esac
     COMPREPLY=( $( compgen -W "${subcommands[*]}" -- $cur  )  )
-}
-
-_u_dir() {
-    local prev="$1"
-    local choices=()
-
-    case "$prev" in
-        tree)
-            choices=(*)
-            ;;
-        delete)
-            choices=(empty)
-            ;;
-        empty)
-            choices=(*)
-            ;;
-    esac
-    COMPREPLY=( $( compgen -W "${choices[*]}" -- $cur  )  )
-}
-
-_u_disk() {
-    local prev="$1"
-    local sub="$2"
-    local choices=()
-
-    case "$sub" in
-        ls|list|info|reformat)
-            [[ $COMP_CWORD == 3 ]] && choices=(*)
-            ;;
-        verify|repair)
-            [[ $COMP_CWORD == 3 ]] && choices=(volume disk)
-            [[ $COMP_CWORD == 4 ]] && choices=(*)
-            ;;
-        format)
-            if [[ $COMP_CWORD == 3 ]]; then
-                choices=(ExFAT JHFS+ MS-DOS volume)
-            else
-                case $COMP_CWORD in
-                    4)
-                        [[ ${COMP_WORDS[3]} == "volume" ]] && choices=(ExFAT JHFS+ MS-DOS)
-                        ;;
-                    5)
-                        [[ ${COMP_WORDS[3]} == "MS-DOS" || \
-                            ${COMP_WORDS[3]} == "ExFAT" || \
-                            ${COMP_WORDS[3]} == "JHFS+" ]] && choices=(*)
-
-                        ;;
-                    6)
-                        [[ ${COMP_WORDS[3]} == "volume" ]] && choices=(*)
-                        ;;
-                esac
-            fi
-            ;;
-        rename)
-            if [[ $COMP_CWORD == 3 ]]; then
-                choices=(
-                    $(
-                        m disk ls \
-                        | grep -E '^ +[0-9]:' \
-                        | sed -E 's/^.+[0-9] (B|.B) +//'
-                    )
-                )
-            fi
-            ;;
-    esac
-    COMPREPLY=( $( compgen -W "${choices[*]}" -- $cur  )  )
 }
 
 
@@ -216,50 +144,8 @@ _u () {
             cmd=${COMP_WORDS[1]}
             sub=${COMP_WORDS[2]}
             case "$cmd" in
-                dir)
-                    _m_dir "$prev"
-                    ;;
-                disk)
-                    _m_disk "$prev" "$sub"
-                    ;;
                 dock)
                     _m_dock "$prev" "$sub"
-                    ;;
-                finder)
-                    [[ $COMP_CWORD == 3 ]] \
-                        && COMPREPLY=($(compgen -W "YES NO" -- $cur))
-                    ;;
-                firewall)
-                    local _tmp=(*)
-                    [[ $sub == "add" && $COMP_CWORD -lt 5 ]] \
-                        && COMPREPLY=($(compgen -W "${_tmp[*]}" -- $cur))
-                    ;;
-                gatekeeper)
-                    if [[ \
-                        $sub == "create"
-                        && $COMP_CWORD -gt 3
-                        && $COMP_CWORD -lt 5
-                    ]]; then
-                        local _tmp=(*)
-                        COMPREPLY=($(compgen -W "${_tmp[*]}" -- $cur))
-                    fi
-                    ;;
-                network)
-                    if [[ $sub == "location" ]]; then
-                        if [[ $COMP_CWORD == 3 ]]; then
-                            local _tmp=(create delete switch)
-                            COMPREPLY=($(compgen -W "${_tmp[*]}" -- $cur))
-                        fi
-                    fi
-                    ;;
-                nosleep)
-                    local _tmp=(*)
-                    [[ $COMP_CWORD == 3 ]] \
-                        && COMPREPLY=($(compgen -W "${_tmp[*]}" -- $cur))
-                    ;;
-                screensaver)
-                    [[ $sub == "askforpassword" && $COMP_CWORD == 3 ]] \
-                        && COMPREPLY=($(compgen -W "YES NO" -- $cur))
                     ;;
             esac
             ;;
@@ -267,5 +153,4 @@ _u () {
 
 }
 
-#complete -F _m m
 complete -o bashdefault -o default -F _u u
