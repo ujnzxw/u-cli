@@ -124,9 +124,34 @@ _u_dock() {
 _u () {
     local cur
     local commands=(
-        help battery bluetooth dir disk dns dock finder firewall gatekeeper group hostname
-        info lock network nosleep ntp restart safeboot screensaver service
-        shutdown sleep timezone trash user volume vpn wallpaper wifi
+                    help
+                    battery
+                    bluetooth
+                    dir
+                    disk
+                    firewall
+                    getname
+                    group
+                    hostname
+                    ignore-host
+                    info
+                    ip
+                    list
+                    lock
+                    note
+                    panel
+                    proxy
+                    reboot
+                    restart
+                    service
+                    shutdown
+                    sleep
+                    terminal
+                    tool
+                    trash
+                    volume
+                    wallpaper
+                    wifi
     )
 
     COMPREPLY=()
