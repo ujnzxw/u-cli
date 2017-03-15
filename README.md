@@ -27,6 +27,10 @@ You can also install it in a different path
 
 `INSTALL_DIR=$HOME/.u-cli sh <(curl -fsSL https://raw.githubusercontent.com/ujnzxw/u-cli/master/install.sh)`
 
+To use bash completion in ubuntu:
+  1. copy `/completion/bash/u` to `/usr/share/bash-completion/completions/`
+  2. enable competion in `/etc/bash.bashrc`
+  3. run `source /etc/bash_completion`
 
 _Note: You should reload your shell in both cases_
 
